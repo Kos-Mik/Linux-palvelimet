@@ -35,3 +35,7 @@
 - Avoimen lähdekoodin ohjelmistot eivät ole pelkästään yksityisten ihmisten pieni harrasteprojekti vaan niitä käytetään myös yritysten keskuudessa. Niiden suosio perustuu erityisesti siihen, että ne ovat monesti ilmaisia, joustavia ja muokattavissa erilaisiin tarpeisiin. Tunnettuja esimerkkejä ovat Linux-käyttöjärjestelmä, Firefox-selain, LibreOffice -ohjelmisto, WordPress-sisällönhallintajärjestelmä ja Android-käyttöjärjestelmä.
 - Em. eduista huolimatta, avoin lähdekoodi voi sisältää myös erilaisia riskejä. Ohjelmistoissa voi esiintyä yhteensopivuusongelmia tai tietoturva-aukkoja, eikä niiden takana yleensä ole esim. vastuullista yritystä tarjoamassa takuuta tai virallista asiakastukea. Toisaalta aktiivinen kehittäjäyhteisö pystyy usein korjaamaan puutteita ja vikoja nopeasti.
 - Avoimen lähdekoodin ohjelmistoihin osallistuminen on myös hyvä tapa kehittää omia ohjelmointitaitoja. Erilaisten avoimien lähdekoodin projektien parissa työskentely tarjoaa käytännön kokemusta ohjelmistokehityksestä, auttaa luomaan ammatillisia verkostoja ja voi tehdä osaamisesta näkyvämpää tuleville työnantajille.
+
+# Lähteet:
+
+- What Is Open Source Software and Why Use OSS?, Coursera Staff 2015 Luettavissa: https://www.coursera.org/articles/what-is-open-source-software Luettu. 19.8.2026
