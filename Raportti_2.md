@@ -74,13 +74,15 @@ Siellä ne ovat nyt suojassa ikäviltä yllätyksiltä:
   <em>Kuva 5. Animals.txt- ja vegetables.txt-tiedostot backups-kansiossa.</em>
 </p>
 
-Nyt meidän on poistettava kolme elukkaa **docs**-kansion **animals.txt**-tiedostosta ja poistettava **vegetables.txt** kokonaan:
+Nyt meidän on poistettava kolme elukkaa **docs**-kansion **animals.txt**-tiedostosta...
 
 <p align="center">
   <img width="694" height="308" alt="Näyttökuva 2026-08-26 181456" src="https://github.com/user-attachments/assets/c07d94bb-3486-44b4-95bf-9007458e65a6">
   <br>
   <em>Kuva 6. Animals.txt-tiedosto kolmen eläimen poistamisen jälkeen.</em>
 </p>
+
+... ja poistettava **vegetables.txt**-tiedosto kokonaan:
 
 ```bash
 rm ~/practice/docs/vegetables.txt
@@ -133,7 +135,100 @@ Huppista! Nyt tulikin näköjään kaikki yläkansiotkin mukaan:
 
 Arkistointikomennot selvästikin omalla kohdallani vaativat hieman lisää opiskelua, koska en yrityksistä huolimatta ole saanut pelkkää backup-kansiota pakattua vaan koko hakemisto on mennyt kerralla sinne.
 
+## 1. Grep and Pipe  
 
+### Grep 
+
+Seuraavana tehtävänä testataan grep-komentoa eri valitsimilla. Grep on yksinkertaistettuna hakutyökalu, joka mahdollistaa nopean tietojen haun tiedostoista ilman, että niitä tarvitsee avata editoriin. 
+Alkuun luodaan **fruits.txt**-niminen tiedosto komennolla:
+
+```bash
+echo -e “apple\nbanana\norange\nApple pie” > fruits.txt
+```
+Tämä loi tekstitiedoston käyttäjän kotihakemistoon. Seuraavaksi testataan grep-komentoja eri valitsimien kanssa.
+
+<br>
+
+Kun halutaan etsiä tiedostosta kaikki rivit, joilla esiintyy sana **apple** ja tulostaa ne näytölle:
+```bash
+grep apple fruits.txt 
+```
+<br>
+
+**-i** tarkoittaa tässä tapauksessa **ignore case** eli kirjainkoolla ei ole väliä, kun halutaan etsiä tiedostosta rivit, jossa sana **apple** esiintyy:
+```bash
+grep -i apple fruits.txt  
+```
+<br>
+
+**-n** tässä tapauksessa näyttää hakutuloksen rivinumeron, kun halutaan etsiä tiedostosta rivit, jossa sana **apple** esiintyy:
+```bash
+grep -n apple fruits.txt
+```
+<br>
+
+**-ni** on kahden edellisen yhdistelmä eli haku ei katso kirjainkokoa ja näyttää rivinumeron:
+```bash
+grep -ni apple fruits.txt
+```
+<br>
+
+**-v** tuottaa käänteisen haun eli näyttää ne rivit, jotka eivät täsmää **apple**-hakusanan kanssa:
+```bash
+grep -v apple fruits.txt
+```
+
+<p align="center">
+  <img width="397" height="282" alt="image" src="https://github.com/user-attachments/assets/4a5078d4-fbbb-476f-bebe-2b8472a29446" />
+  <br>
+  <em>Kuva 10. Grep-komennolla ja eri valitsimilla suoritetut haut</em>
+</p>
+
+<br>
+
+### wc - word count
+
+wc eli word count on työkalu, joka kertoo kuinka monta riviä, sanaa ja merkkiä teksti tai tiedosto sisältää. 
+
+<br>
+
+Lasketaan tiedostossa olevien rivien (**l**) määrä:
+```bash
+wc -l fruits.txt
+```
+<br>
+
+Lasketaan tiedostossa olevien sanojen (**w**) määrä:
+```bash
+wc -w fruits.txt  
+```
+<br>
+
+Lasketaan tiedostossa olevien merkkien (**c**) määrä:
+```bash
+wc -c fruits.txt
+```
+<br>
+
+<p align="center">
+  <img width="299" height="129" alt="image" src="https://github.com/user-attachments/assets/c6f3f39c-215b-4229-a450-912889c19269" />
+  <br>
+  <em>Kuva 11. wc-komennolla ja eri valitsimilla suoritetut haut</em>
+</p>
+
+<br>
+
+### Pipe
+
+Pipe yhdistää komentoja siten, että ensimmäisen komennon tuloste toimii seuraavan komennon syötteenä. Se on erityisen hyödyllinen silloin, kun useita komentoja halutaan ketjuttaa yhdeksi komentoriviksi. Tässä tehtävässä tarkoituksena on testata pipe-operaattorin käyttöä eri komentojen ja valitsimien kanssa.
+
+Ensin luodaan uusi **animals.txt**-niminen tekstitiedosto kotihakemistoon:
+
+```bash
+echo -e "dog\ncat\nhorse\ncow\ncatfish" > animals.txt 
+```
+
+Seuraavaksi kokeillaan pipen käyttöä:
 
 
 
