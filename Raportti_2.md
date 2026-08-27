@@ -135,7 +135,7 @@ Huppista! Nyt tulikin näköjään kaikki yläkansiotkin mukaan:
 
 Arkistointikomennot selvästikin omalla kohdallani vaativat hieman lisää opiskelua, koska en yrityksistä huolimatta ole saanut pelkkää backup-kansiota pakattua vaan koko hakemisto on mennyt kerralla sinne.
 
-## 1. Grep and Pipe  
+## 2. Grep and Pipe  
 
 ### Grep 
 
@@ -229,6 +229,181 @@ echo -e "dog\ncat\nhorse\ncow\ncatfish" > animals.txt
 ```
 
 Seuraavaksi kokeillaan pipen käyttöä:
+
+<br>
+
+**cat** animals.txt näyttää tiedoston sisällön ja **grep cat** etsii tulosteesta rivit, joissa esiintyy sana **cat**:
+```bash
+cat animals.txt | grep cat
+```
+<br>
+
+**cat** näyttää tiedoston sisällön ja **wc -l** laskee rivien määrän.
+```bash
+cat animals.txt | wc -l 
+```
+<br>
+
+**cat** näyttää tiedoston sisällön, **sort** lajittelee rivit aakkosjärjestykseen ja **uniq** poistaa vierekkäiset duplikaattirivit.
+```bash
+cat animals.txt | sort | uniq
+```
+<br>
+
+<p align="center">
+  <img width="425" height="219" alt="image" src="https://github.com/user-attachments/assets/d3f78d33-521e-4f89-847c-48f2e848c8e8" />
+  <br>
+  <em>Kuva 12. pipe-operaattorilla tehdyt haut</em>
+</p>
+
+<br>
+
+### GPL-2 License
+
+Tässä tehtävässä haetaan Linuxin GPL-2 -lisenssistä tietoja käyttämällä aiemmin opittuja komentoja ja valitsimia.
+
+<br>
+
+Tarkastellaan kuinka monta riviä lisenssi sisältää:
+```bash
+wc -l /usr/share/common-licenses/GPL-2
+```
+Vastaus: **338**
+
+<br>
+
+Etsitään grepillä lisenssitiedostosta kaikki rivit, jotka sisältävät sanan **GNU**, ja tulostaa ne näytölle.:
+```bash
+grep GNU /usr/share/common-licenses/GPL-2
+```
+Vastaus: 
+> GNU GENERAL PUBLIC LICENSE
+> freedom to share and change it.  By contrast, the GNU General Public
+> the GNU Lesser General Public License instead.)  You can apply it to
+               >     GNU GENERAL PUBLIC LICENSE
+  >  it under the terms of the GNU General Public License as published by
+ >   GNU General Public License for more details.
+ >   You should have received a copy of the GNU General Public License along
+> library.  If this is what you want to do, use the GNU Lesser General
+
+<br>
+
+Lasketaan kuinka moni rivi sisältää sanan **GNU**:
+```bash
+grep GNU /usr/share/common-licenses/GPL-2 | wc -l
+```
+Vastaus: **8**
+
+<br>
+
+Haetaan kaikki rivit, jotka sisältävät sanan **license**:
+```bash
+grep license /usr/share/common-licenses/GPL-2
+```
+Vastaus:
+> of this license document, but changing it is not allowed.
+>  The licenses for most software are designed to take away your
+> (2) offer you this license which gives you legal permission to copy,
+> program will individually obtain patent licenses, in effect making the
+> patent must be licensed for everyone's free use or not licensed at all.
+> the term "modification".)  Each licensee is addressed as "you".
+>    part thereof, to be licensed as a whole at no charge to all third
+> this License, whose permissions for other licensees extend to the
+>  4. You may not copy, modify, sublicense, or distribute the Program
+> otherwise to copy, modify, sublicense or distribute the Program is
+> this License will not have their licenses terminated so long as such
+> Program), the recipient automatically receives a license from the
+> license would not permit royalty-free redistribution of the Program by
+> implemented by public license practices.  Many people have made
+> to distribute software through any other system and a licensee cannot
+>    with this program; if not, see <https://www.gnu.org/licenses/>.
+
+<br>
+
+Haetaan kaikki rivit, jotka sisältävät sanan **license**, mutta tällä kertaa ei kiinnitetä huomiota kirjainkokoon:
+```bash
+grep -i license /usr/share/common-licenses/GPL-2
+```
+Vastaus: 
+> GNU GENERAL PUBLIC LICENSE
+> of this license document, but changing it is not allowed.
+>  The licenses for most software are designed to take away your
+> License is intended to guarantee your freedom to share and change free
+> General Public License applies to most of the Free Software
+> the GNU Lesser General Public License instead.)  You can apply it to
+> price.  Our General Public Licenses are designed to make sure that you
+> (2) offer you this license which gives you legal permission to copy,
+> program will individually obtain patent licenses, in effect making the
+> patent must be licensed for everyone's free use or not licensed at all.
+>                    GNU GENERAL PUBLIC LICENSE
+>  0. This License applies to any program or other work which contains
+> under the terms of this General Public License.  The "Program", below,
+> the term "modification".)  Each licensee is addressed as "you".
+> covered by this License; they are outside its scope.  The act of
+> notices that refer to this License and to the absence of any warranty;
+> and give any other recipients of the Program a copy of this License
+>    part thereof, to be licensed as a whole at no charge to all third
+>    parties under the terms of this License.
+>    License.  (Exception: if the Program itself is interactive but
+> themselves, then this License, and its terms, do not apply to those
+> this License, whose permissions for other licensees extend to the
+> the scope of this License.
+>  4. You may not copy, modify, sublicense, or distribute the Program
+> except as expressly provided under this License.  Any attempt
+> otherwise to copy, modify, sublicense or distribute the Program is
+> void, and will automatically terminate your rights under this License.
+> this License will not have their licenses terminated so long as such
+>  5. You are not required to accept this License, since you have not
+> prohibited by law if you do not accept this License.  Therefore, by
+> Program), you indicate your acceptance of this License to do so, and
+> Program), the recipient automatically receives a license from the
+> this License.
+> otherwise) that contradict the conditions of this License, they do not
+> excuse you from the conditions of this License.  If you cannot
+> License and any other pertinent obligations, then as a consequence you
+> license would not permit royalty-free redistribution of the Program by
+> the only way you could satisfy both it and this License would be to
+> implemented by public license practices.  Many people have made
+> to distribute software through any other system and a licensee cannot
+> be a consequence of the rest of this License.
+> original copyright holder who places the Program under this License
+> countries not thus excluded.  In such case, this License incorporates
+> the limitation as if written in the body of this License.
+> of the General Public License from time to time.  Such new versions will
+> specifies a version number of this License which applies to it and "any
+> this License, you may choose any version ever published by the Free Software
+>   11. BECAUSE THE PROGRAM IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY
+>    it under the terms of the GNU General Public License as published by
+>    the Free Software Foundation; either version 2 of the License, or
+>    GNU General Public License for more details.
+>    You should have received a copy of the GNU General Public License along
+>    with this program; if not, see <https://www.gnu.org/licenses/>.
+> parts of the General Public License.  Of course, the commands you use may
+> This General Public License does not permit incorporating your program into
+> Public License instead of this License.
+
+<br>
+
+Suunnitellaan oma esimerkki. Etsitään kaikki ne rivit, joissa esiintyy sana **program** kirjainkoosta riippumatta ja lasketaan rivien sisältämien sanojen määrä:
+```bash
+grep -i program /usr/share/common-licenses/GPL-2 | wc -w
+```
+Vastaus: **817**
+
+<br>
+
+### Tiivistelmä GPL-2-lisenssin pääkohdista
+
+- Ohjelmistoa saa käyttää vapaasti, sen lähdekoodia saa tutkia ja sitä saa kopioida ja jakaa edelleen.
+- Lähdekoodia saa muokata.
+- Muokattuja versioita saa levittää edelleen, mutta ne on julkaistava samalla GPL-2-lisenssillä.
+- Lähdekoodin on oltava saatavilla ohjelmiston mukana tai käyttäjien saatavissa.
+- Lisenssi ei anna takuuta ohjelmiston toimivuudesta.
+
+## 3. btop 
+
+
+
 
 
 
