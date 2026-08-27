@@ -268,7 +268,7 @@ Tarkastellaan kuinka monta riviä lisenssi sisältää:
 ```bash
 wc -l /usr/share/common-licenses/GPL-2
 ```
-Vastaus: **338**
+Tulos: **338**
 
 <br>
 
@@ -276,7 +276,7 @@ Etsitään grepillä lisenssitiedostosta kaikki rivit, jotka sisältävät sanan
 ```bash
 grep GNU /usr/share/common-licenses/GPL-2
 ```
-Vastaus: 
+Tulos: 
 > GNU GENERAL PUBLIC LICENSE
 > freedom to share and change it.  By contrast, the GNU General Public
 > the GNU Lesser General Public License instead.)  You can apply it to
@@ -300,7 +300,7 @@ Haetaan kaikki rivit, jotka sisältävät sanan **license**:
 ```bash
 grep license /usr/share/common-licenses/GPL-2
 ```
-Vastaus:
+Tulos:
 > of this license document, but changing it is not allowed.
 >  The licenses for most software are designed to take away your
 > (2) offer you this license which gives you legal permission to copy,
@@ -324,7 +324,7 @@ Haetaan kaikki rivit, jotka sisältävät sanan **license**, mutta tällä kerta
 ```bash
 grep -i license /usr/share/common-licenses/GPL-2
 ```
-Vastaus: 
+Tulos: 
 > GNU GENERAL PUBLIC LICENSE
 > of this license document, but changing it is not allowed.
 >  The licenses for most software are designed to take away your
@@ -388,7 +388,7 @@ Suunnitellaan oma esimerkki. Etsitään kaikki ne rivit, joissa esiintyy sana **
 ```bash
 grep -i program /usr/share/common-licenses/GPL-2 | wc -w
 ```
-Vastaus: **817**
+Tulos: **817**
 
 <br>
 
@@ -402,8 +402,40 @@ Vastaus: **817**
 
 ## 3. btop 
 
+### Asennus
 
+btop-asennus tapahtuisi komennolla **sudo apt-get install btop**. Tämä on kuitenkin omalla virtuaalikoneellani jo valmiina, joten käynnistetään btop suoraan:
 
+<p align="center">
+  <img width="767" height="585" alt="Näyttökuva 2026-08-27 193134" src="https://github.com/user-attachments/assets/4ef08b93-960d-4e09-9bbd-b0b53b61ffdb" />
+  <br>
+  <em>Kuva 13. btop käynnistettynä</em>
+</p>
+
+<br>
+
+Kun tarkistetaan missä ohjelmatiedostot sijaitsevat käytetään seuraavaa komentoa:
+```bash
+which btop
+```
+Tulos: 
+> /usr/bin/btop
+
+<br>
+
+Etsitään käyttäjäkohtaiset konfiguraatiotiedostot:
+```bash
+find ~/.config -name "*btop*"
+```
+
+Tulos:
+> /home/mikko/.config/btop
+>
+> **/home/mikko/.config/btop/btop.conf**
+>
+> /home/mikko/.config/btop/btop.log
+
+**btop.conf** oli hakemamme tiedosto.
 
 
 
