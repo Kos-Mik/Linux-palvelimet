@@ -596,7 +596,9 @@ ping -i 0.1 8.8.8.8
   <em>Kuvat 16 ja 17. btop pingi päällä ja ilman</em>
 </p>
 
-Seuraavaksi kuormitetaan suoritinta:
+Ping lähetti ICMP-paketteja 0,1 sekunnin välein, mikä aiheutti selkeää verkkoliikennettä.
+
+Seuraavaksi kuormitetaan prosessoria:
 
 ```bash
 yes > /dev/null 
@@ -606,8 +608,38 @@ yes > /dev/null
  <img width="780" height="575" alt="image" src="https://github.com/user-attachments/assets/2fac6359-a879-440e-b06a-1d68ffe9989c" />
  <img width="782" height="578" alt="image" src="https://github.com/user-attachments/assets/1df2cacc-2cee-4b8e-8fb8-e629e06d5fc5" />
   <br>
-  <em>Kuvat 18 ja 19. btop suorittimen kuormituksella ja ilman</em>
+  <em>Kuvat 18 ja 19. btop prosessorin kuormituksella ja ilman</em>
 </p>
+
+Komento yes > /dev/null kuormitti yhtä prosessoriydintä täyteen käyttöasteeseen.
+
+<br>
+
+Kokonaisuudessaan btopin tietojen perusteella järjestelmä toimii hyvin. Yksi prosessorin ytimistä oli 100 % käytössä yes-prosessin vuoksi, mutta kokonaiskuormitus oli siitä huolimatta melko alhainen, koska muut ytimet olivat lähes käyttämättömiä. Muistia oli runsaasti vapaana, swap-muistia ei käytetty ja levytoiminta oli vähäistä. Verkkoliikenteessä näkyi ping-komennon aiheuttama liikenne. Järjestelmällä on kuitenkin riittävästi resursseja, eikä testikuormitus selvästikään aiheuta suorituskykyongelmia.
+
+## 4. Asennetaan oma sovellus
+
+Asennan ncdu-levytilan analysointiohjelman, jotta voin tutkia mikä kansio vie järjestelmästäni eniten tilaa:
+
+```bash
+sudo apt install ncdu
+```
+<br>
+
+Suoritetaan ncdu:
+```bash
+ncdu
+```
+<br>
+<p align="center">
+ <img width="783" height="576" alt="image" src="https://github.com/user-attachments/assets/3b3b667b-5f43-410e-9ddc-a4d476715207" />
+  <br>
+  <em>Kuva 20. ncdu:n tulokset</em>
+</p>
+<br>
+
+ncdu:n perusteella suurin osa kotihakemiston levytilasta on välimuistitiedostoissa ja selaimen tiedoissa. Eniten tilaa vie .cache-hakemisto (40,2 MiB), joka sisältää ohjelmien välimuistitiedostoja. Toiseksi eniten tilaa vie .mozilla-hakemisto (19,0 MiB), joka sisältää Firefox-selaimen asetuksia ja välimuistitiedostoja. Muut kansiot ovat huomattavasti pienempiä. Kotihakemiston koko on kokonaisuudessaan melko pieni, ja uskoisin, että virtuaalikoneelle asetettu 60 gigatavun levykoko tulee olemaan enemmän kuin tarpeeksi tällä kurssilla. En onnistunut paikantamaan ncdu:n konfiguraatiotiedostoa, joten en voinut testata sen toiminnallisuutta asetuksia muokkaamalla. Käytin siis tätä pelkillä oletusasetuksilla.
+
 
 
 
