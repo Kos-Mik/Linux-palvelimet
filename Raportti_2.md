@@ -292,7 +292,7 @@ Lasketaan kuinka moni rivi sisältää sanan **GNU**:
 ```bash
 grep GNU /usr/share/common-licenses/GPL-2 | wc -l
 ```
-Vastaus: **8**
+Tulos: **8**
 
 <br>
 
@@ -437,6 +437,177 @@ Tulos:
 
 **btop.conf** oli hakemamme tiedosto.
 
+### Konfiguraatio
+
+Tutkitaan tällä kertaa btopin konfiguraatiotiedostoja. Listataan kaikki btop-paketin asentamat tiedostot ja niiden sijainnit Linuxissa:
+
+```bash
+dpkg -L btop
+```
+
+Tulos:
+> /.
+> 
+> /usr
+> 
+> /usr/bin
+> 
+> /usr/bin/btop
+> 
+> /usr/share
+> 
+> /usr/share/applications
+> 
+> /usr/share/applications/btop.desktop
+> 
+> /usr/share/btop
+> 
+> /usr/share/btop/themes
+> 
+> /usr/share/btop/themes/HotPurpleTrafficLight.theme
+> 
+> /usr/share/btop/themes/adapta.theme
+> 
+> /usr/share/btop/themes/adwaita.theme
+> 
+> /usr/share/btop/themes/ayu.theme
+> 
+> /usr/share/btop/themes/dracula.theme
+> 
+> /usr/share/btop/themes/dusklight.theme
+> 
+> /usr/share/btop/themes/elementarish.theme
+> 
+> /usr/share/btop/themes/everforest-dark-hard.theme
+> 
+> /usr/share/btop/themes/everforest-dark-medium.theme
+> 
+> /usr/share/btop/themes/flat-remix-light.theme
+> 
+> /usr/share/btop/themes/flat-remix.theme
+> 
+> /usr/share/btop/themes/greyscale.theme
+> 
+> /usr/share/btop/themes/gruvbox_dark.theme
+> 
+> /usr/share/btop/themes/gruvbox_dark_v2.theme
+> 
+> /usr/share/btop/themes/gruvbox_material_dark.theme
+> 
+> /usr/share/btop/themes/horizon.theme
+> 
+> /usr/share/btop/themes/kyli0x.theme
+> 
+> /usr/share/btop/themes/matcha-dark-sea.theme
+> 
+> /usr/share/btop/themes/monokai.theme
+> 
+> /usr/share/btop/themes/night-owl.theme
+> 
+> /usr/share/btop/themes/nord.theme
+> 
+> /usr/share/btop/themes/onedark.theme
+> 
+> /usr/share/btop/themes/paper.theme
+> 
+> /usr/share/btop/themes/solarized_dark.theme
+> 
+> /usr/share/btop/themes/solarized_light.theme
+> 
+> /usr/share/btop/themes/tokyo-night.theme
+> 
+> /usr/share/btop/themes/tokyo-storm.theme
+> 
+> /usr/share/btop/themes/tomorrow-night.theme
+> 
+> /usr/share/btop/themes/whiteout.theme
+> 
+> /usr/share/doc
+> 
+> /usr/share/doc/btop
+> 
+> /usr/share/doc/btop/README.md.gz
+> 
+> /usr/share/doc/btop/changelog.Debian.gz
+> 
+> /usr/share/doc/btop/changelog.gz
+> 
+> /usr/share/doc/btop/copyright
+> 
+> /usr/share/icons
+> 
+> /usr/share/icons/hicolor
+> 
+> /usr/share/icons/hicolor/48x48
+> 
+> /usr/share/icons/hicolor/48x48/apps
+> 
+> /usr/share/icons/hicolor/48x48/apps/btop.png
+> 
+> /usr/share/icons/hicolor/scalable
+> 
+> /usr/share/icons/hicolor/scalable/apps
+> 
+> /usr/share/icons/hicolor/scalable/apps/btop.svg
+> 
+> /usr/share/man
+> 
+> /usr/share/man/man1
+> 
+> /usr/share/man/man1/btop.1.gz
+
+Luodaan btopin conf-tiedostosta varmuuskopio:
+
+```bash
+cp ~/.config/btop/btop.conf ~/.config/btop/btop.conf.orig
+```
+<br>
+
+Ja siellä on se on hyvässä tallessa:
+<p align="center">
+  <img width="795" height="584" alt="image" src="https://github.com/user-attachments/assets/e8c9875c-2821-48d6-b1f6-05bf1758ac31" />
+  <br>
+  <em>Kuva 14. alkuperäinen ja varmuuskopioitu conf-tiedosto</em>
+</p>
+
+<br>
+
+<p align="center">
+  <img width="719" height="538" alt="image" src="https://github.com/user-attachments/assets/d8a9e264-5879-4571-952f-321ad5f4e522" />
+  <img width="719" height="541" alt="image" src="https://github.com/user-attachments/assets/a4c7d4d2-4c39-4cd3-824e-f2a364972888" />
+  <br>
+  <em>Kuvat 14 ja 15. muokattuja asetuksia conf-tiedostoissa ja niiden tulokset</em>
+</p>
+<br>
+**update_ms** = 300, **proc_tree** = True ja **custom_cpu_name** = "Skynet" tuottivat tuloksia. Kun yritin proc_tree:n - tai mihin tahansa muuhun boolean-arvon omaavaan asetukseen laittaa jotain muuta kuin True tai False, järjestelmä korjasi itse itsensä aina, kun btopin käynnisti uudelleen ja arvot palasivat oletuksille. En onnistunut siis rikkomaan btopia ainakaan conf-tiedoston kautta.
+
+### Testikuorman luonti
+
+Kuormitetaan testausmielessä järjestelmää pingaamalla Googlen DNS:n lyhyillä intervalleilla:
+
+```bash
+ping -i 0.1 8.8.8.8 
+```
+<br>
+<p align="center">
+  <img width="784" height="579" alt="image" src="https://github.com/user-attachments/assets/f879a58d-0d17-4096-a9d9-fd65b8a77ef5" />
+  <img width="785" height="579" alt="image" src="https://github.com/user-attachments/assets/cee6f479-39cb-4a12-9832-b906ad02c60b" />
+  <br>
+  <em>Kuvat 16 ja 17. btop pingi päällä ja ilman</em>
+</p>
+
+Seuraavaksi kuormitetaan suoritinta:
+
+```bash
+yes > /dev/null 
+```
+<br>
+<p align="center">
+ <img width="780" height="575" alt="image" src="https://github.com/user-attachments/assets/2fac6359-a879-440e-b06a-1d68ffe9989c" />
+ <img width="782" height="578" alt="image" src="https://github.com/user-attachments/assets/1df2cacc-2cee-4b8e-8fb8-e629e06d5fc5" />
+  <br>
+  <em>Kuvat 18 ja 19. btop suorittimen kuormituksella ja ilman</em>
+</p>
 
 
 
