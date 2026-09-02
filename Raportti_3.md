@@ -4,7 +4,7 @@
 
 Tässä tehtävässä asennetaan virtuaalikoneelle Apache2
 
-## 1. Basic Commands
+### Apachen asennus ja konfiguraatiot
 
 Ensimmäinen tehtävä on asentaa Apache2:
 
@@ -40,7 +40,7 @@ Ja kun käytetään curlia...
 ```bash
 curl http://localhost
 ```
-...tulee sivun lähdekoodi: 
+...konsoliin pamahtaa sivun lähdekoodi: 
 
 <details>
 <summary>Näytä lähdekoodi</summary>
@@ -417,3 +417,77 @@ curl http://localhost
 
 ```
 </details>
+
+Eli asennus on onnistunut ongelmitta.
+
+Seuraavaksi muutetaan oletussivun sisältöä. Kokeilin alkuun tehdä tehtävänannon mukaan, mutta suomeksi:
+
+```bash
+echo "Tämä on uuden web-palvelimeni oletussivu." | sudo tee /var/www/html/index.html
+```
+
+Mutta selain näyttää ääkköset virheellisesti:
+
+<p align="center">
+  <img width="491" height="174" alt="Näyttökuva 2026-09-02 184711" src="https://github.com/user-attachments/assets/4e46adc8-3d30-438d-a132-8a4407243be7" />
+  <br>
+  <em>Kuva 3. Ei kelvannu</em>
+</p>
+
+<br>
+
+Pakko siis muuttaa se englanninkieliseksi:
+
+```bash
+echo "Tally-ho, chaps! This is the default page of my new web server" | sudo tee /var/www/html/index.html
+```
+<p align="center">
+  <img width="581" height="167" alt="image" src="https://github.com/user-attachments/assets/4022eeb4-f026-4190-91e3-a5e67df8a91f" />
+  <br>
+  <em>Kuva 4. Parempi</em>
+</p>
+
+Mitä kyseinen komento sitten tekee? Siinä on oikeastaan kolme eri osaa, joten palastellaan niitä hieman:
+
+echo tulostaa annetun tekstin näytölle:
+```bash
+echo "Tally-ho, chaps! This is the default page of my new web server"
+```
+
+Välissä on pipe, jonka avulla echo-komennon tuottama teksti lähetetään tee-komennolle:
+```bash
+|
+```
+
+Tässä pääkäyttäjän oikeuksilla suoritetaan tee-komento, joka puolestaan lukee syötteen ja kirjoittaa sen tiedostoon. Tiedosto /var/www/html/index.html korvataan uudella sisällöllä:
+```bash
+sudo tee /var/www/html/index.html
+```
+
+Muokkauksessa voidaan käyttää myös muita tapoja, kuten esim. nano-editoria, jolla voi helposti muuttaa sisältöä mieleisekseen:
+```bash
+sudo nano /var/www/html/index.html
+```
+<p align="center">
+ <img width="727" height="129" alt="image" src="https://github.com/user-attachments/assets/1edc54db-98b2-4764-92de-43043fc32109" />
+  <br>
+  <em>Kuva 5. Nano-editori</em>
+</p>
+
+<br>
+
+Entä miksi seuraava komento ei toimi?
+```bash
+sudo echo ‘This is…’ > /var/www/html/index.html
+```
+Vaikka siinä on sudo, virhe johtuu siitä, että shell käsittelee uudelleenohjauksen ennen kuin sudo suorittaa komennon. Eli echo ajetaan sudo-oikeuksilla, mutta tiedoston avaaminen kirjoitusta varten tapahtuu normaalin käyttäjän oikeuksilla eikä tavallisella käyttäjällä ei ole kirjoitusoikeutta hakemistoon
+
+<p align="center">
+ <img width="571" height="37" alt="image" src="https://github.com/user-attachments/assets/a76a29d3-36f4-4260-9813-7454098f528b" />
+  <br>
+  <em>Kuva 6. Ja siksi emme voi muokata tekstiä</em>
+</p>
+
+
+
+
