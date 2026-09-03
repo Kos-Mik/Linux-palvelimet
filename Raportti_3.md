@@ -480,12 +480,134 @@ Entä miksi seuraava komento ei toimi?
 ```bash
 sudo echo ‘This is…’ > /var/www/html/index.html
 ```
-Vaikka siinä on sudo, virhe johtuu siitä, että shell käsittelee uudelleenohjauksen ennen kuin sudo suorittaa komennon. Eli echo ajetaan sudo-oikeuksilla, mutta tiedoston avaaminen kirjoitusta varten tapahtuu normaalin käyttäjän oikeuksilla eikä tavallisella käyttäjällä ei ole kirjoitusoikeutta hakemistoon
+Vaikka siinä onkin sudo, virhe johtuu siitä, että shell käsittelee uudelleenohjauksen ennen kuin sudo suorittaa komennon. Eli echo ajetaan sudo-oikeuksilla, mutta tiedoston avaaminen kirjoitusta varten tapahtuu normaalin käyttäjän oikeuksilla eikä tavallisella käyttäjällä ei ole kirjoitusoikeutta hakemistoon
 
 <p align="center">
  <img width="571" height="37" alt="image" src="https://github.com/user-attachments/assets/a76a29d3-36f4-4260-9813-7454098f528b" />
   <br>
   <em>Kuva 6. Ja siksi emme voi muokata tekstiä</em>
+</p>
+
+<br>
+
+Muokkasin nanolla **/etc/hosts**-tiedostoa ja lisäsin rivin 127.0.0.1 minux.local. Tämän ansiosta käyttöjärjestelmä osaa yhdistää nimen minux.local paikalliseen koneeseen. Pingattu vielä onnistuneesti:
+
+<p align="center">
+ <img width="719" height="439" alt="Näyttökuva 2026-09-03 165837" src="https://github.com/user-attachments/assets/3b94b66b-2409-4988-a4d4-352ff31cc23b" />
+ <img width="623" height="214" alt="Näyttökuva 2026-09-03 165906" src="https://github.com/user-attachments/assets/0215cfe1-eedf-4349-9e75-35a72e68e66b" />
+  <br>
+  <em>Kuvat 7 ja 8. hosts-lisäys ja onnistunut pingaus</em>
+</p>
+
+<br>
+
+Seuraavaksi asennetaan UFW eli uncomplicated firewall. Sallitaan portit 22, 80 ja 443 ja poistetaan nanolla IPv6 käytöstä turhaan häiritsemästä:
+
+<p align="center">
+ <img width="597" height="521" alt="image" src="https://github.com/user-attachments/assets/c5a3a52f-60fd-473a-ae49-ebd4f421fd45" />
+  <br>
+  <em>Kuva 9. UFW-konfiguraatioita</em>
+</p>
+
+Testasin UFW-palomuuria estämällä HTTP-portin komennolla:
+
+```bash
+sudo ufw deny 80/tcp.
+```
+Vaikka sääntö näkyi UFW:n tilassa, verkkosivu avautui edelleen osoitteesta http://minux.local. Tämä johtuu siitä, että minux.local on määritelty /etc/hosts-tiedostossa osoitteeseen 127.0.0.1, joka on localhostin loopback-osoite. Loopback-liikennettä ei normaalisti suodateta samalla tavalla kuin ulkoisia verkkoyhteyksiä. Tämän perusteella voidaan päätellä, että UFW estää ulkopuolelta tulevia yhteyksiä porttiin 80, mutta localhostista localhostiin kulkeva liikenne toimii edelleen.
+
+
+Sitten luodaan nimipohjainen virtuaalipalvelin hakemistoon:
+
+```bash
+mkdir -p ~/public_html/minux
+```
+
+Lluodaan yksinkertainen index-sivu:
+
+```bash
+echo "Tämä on minux.local-sivusto." > ~/public_html/minux/index.html
+```
+```bash
+mkdir -p ~/public_html/minux
+```
+Ja luodaan myös konfiguraatiotiedosto:
+
+```bash
+<VirtualHost *:80>
+    ServerName minux.local
+    ServerAlias www.minux.local
+
+    DocumentRoot /home/mikko/public_html/minux
+
+    <Directory /home/mikko/public_html/minux>
+        Require all granted
+    </Directory>
+
+    ErrorLog ${APACHE_LOG_DIR}/error-site1.log
+    CustomLog ${APACHE_LOG_DIR}/access-site1.log combined
+</VirtualHost>
+```
+
+Tallennetaan se ja suoritetaan:
+
+```bash
+sudo apachectl configtest
+```
+
+<p align="center">
+ <img width="724" height="88" alt="image" src="https://github.com/user-attachments/assets/e03eed82-76e5-460a-98de-42b97a58a305" />
+  <br>
+  <em>Kuva 10. Syntaksi on OK</em>
+</p>
+
+<br>
+
+Otetaan sivusto käyttöön:
+
+```bash
+sudo a2ensite minux.conf
+```
+Ja ladataan Apache uudelleen:
+
+```bash
+sudo systemctl reload apache2
+```
+
+Mutta kun yritän mennä sivulle http://minux.local, ei tämä mennytkään täysin putkeen:
+
+<p align="center">
+ <img width="1155" height="353" alt="image" src="https://github.com/user-attachments/assets/bf9bcb1f-89e3-4e84-a49d-cb8bf76fbad6" />
+  <br>
+  <em>Kuva 11. Ei onnistu - kielletty :(</em>
+</p>
+
+<br>
+
+Tarkistetaan error-site1-loki:
+
+```bash
+sudo cat /var/log/apache2/error-site1.log
+```
+
+<p align="center">
+ <img width="794" height="253" alt="image" src="https://github.com/user-attachments/assets/7ffbe155-4acf-4cc8-be0d-f420f81f2640" />
+  <br>
+  <em>Kuva 12. Lokitiedoston sisältö</em>
+</p>
+
+<br>
+
+Syynä oli se, että kotihakemiston käyttöoikeudet estivät Apachea pääsemästä sivuston tiedostoihin. Korjaamalla hakemiston oikeudet komennolla
+```bash
+schmod o+x /home/mikko 
+```
+Apache pystyi lukemaan sivuston tiedostot, minkä jälkeen sivu avautui onnistuneesti osoitteessa http://minux.local.
+
+<p align="center">
+ <img width="608" height="195" alt="image" src="https://github.com/user-attachments/assets/9bae4f45-fdb8-461e-a120-022c26fd8b27" />
+  <br>
+  <em>Kuva 13. Nyt sivu aukeaa, mutta ääkköset on edelleen ongelma</em>
 </p>
 
 
