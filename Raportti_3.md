@@ -610,6 +610,16 @@ Apache pystyi lukemaan sivuston tiedostot, minkä jälkeen sivu avautui onnistun
   <em>Kuva 13. Nyt sivu aukeaa, mutta ääkköset on edelleen ongelma</em>
 </p>
 
+Ja kun tarkistetaan vielä käyttöloki niin siitä näkee, että statuskoodi on nyt muuttunut:
+
+<p align="center">
+<img width="797" height="198" alt="image" src="https://github.com/user-attachments/assets/a374ed92-fdc4-4569-8ea6-6d0e9b9a59f1" />
+  <br>
+  <em>Kuva 14. 403 > 200</em>
+</p>
+
+
+
 
 
 
