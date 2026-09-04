@@ -530,7 +530,7 @@ Tässä kohdin luodaan nimipohjainen virtuaalipalvelin hakemistoon:
 mkdir -p ~/public_html/minux
 ```
 
-Lluodaan yksinkertainen index-sivu:
+Luodaan yksinkertainen index-sivu:
 
 ```bash
 echo "Tämä on minux.local-sivusto." > ~/public_html/minux/index.html
@@ -605,9 +605,9 @@ sudo cat /var/log/apache2/error-site1.log
 
 <br>
 
-Syynä oli se, että kotihakemiston käyttöoikeudet estivät Apachea pääsemästä sivuston tiedostoihin. Korjaamalla hakemiston oikeudet komennolla
+Syynä oli se, että kotihakemiston käyttöoikeudet estivät Apachea pääsemästä sivuston tiedostoihin. Korjaamalla hakemiston oikeudet komennolla:
 ```bash
-schmod o+x /home/mikko 
+chmod o+x /home/mikko 
 ```
 Apache pystyi lukemaan sivuston tiedostot, minkä jälkeen sivu avautui onnistuneesti osoitteessa http://minux.local.
 
@@ -669,6 +669,9 @@ ja lisätään sisällöksi:
     CustomLog ${APACHE_LOG_DIR}/access-site2.log combined
 </VirtualHost>
 ```
+
+<br>
+
 jonka jälkeen tallennetaan konfiguraatiotiedosto.
 
 Nyt otetaan sivusto käyttöön...
