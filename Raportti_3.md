@@ -692,7 +692,7 @@ sudo apache2ctl configtest
 <p align="center">
  <img width="726" height="107" alt="image" src="https://github.com/user-attachments/assets/0e131bc0-322b-46b6-be12-ca2d42998b94" />
   <br>
-  <em>Kuva 15. Syntaksi näyttäisi olevan OK</em>
+  <em>Kuva 15. Syntaksi näyttäisi olevan OK, mutta ongelmia on selvästi jo näkyvissä.</em>
 </p>
 
 <br>
