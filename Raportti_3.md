@@ -2,11 +2,11 @@
 
 ## Johdanto
 
-Tässä tehtävässä asennetaan virtuaalikoneelle Apache2
+Tässä tehtävässä asennetaan virtuaalikoneelle Apache2, joka on yksi maailman laajimmin käytetyistä avoimen lähdekoodin verkkopalvelinohjelmistoista (Heinonen 2026). Tämän lisäksi Apache-palvelimeen luodaan tarvittavat VirtualHost-määritykset ja muut konfiguraatiot, joiden avulla verkkosivustoja voidaan ajaa palvelimella.
 
 ### Apachen asennus ja konfiguraatiot
 
-Ensimmäinen tehtävä on asentaa Apache2:
+Ensimmäinen tehtävä on asentaa itse Apache2:
 
 ```bash
 sudo apt install apache2
@@ -714,3 +714,7 @@ mv ~/public_html-2/index.html ~/public_html-2/munix/
   <br>
   <em>Kuva 16. Virhe korjattu/em>
 </p>
+
+## Lähteet
+
+- Heinonen, J. 2026. Apache2. Luettavissa: https://github.com/johannaheinonen/johanna-test-repo/blob/main/module_3.md. Luettu: 1.9.2026
