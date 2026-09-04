@@ -712,7 +712,7 @@ mv ~/public_html-2/index.html ~/public_html-2/munix/
 <p align="center">
  <img width="694" height="214" alt="image" src="https://github.com/user-attachments/assets/22cabeb1-0a2f-44bf-bcc9-7162b88fa1f7" />
   <br>
-  <em>Kuva 16. Virhe korjattu/em>
+  <em>Kuva 16. Virhe korjattu ja kaikki toimii</em>
 </p>
 
 ## Lähteet
