@@ -420,6 +420,10 @@ curl http://localhost
 
 Eli asennus on onnistunut ongelmitta.
 
+<br>
+
+### Oletussivun muokkaus
+
 Seuraavaksi muutetaan oletussivun sisältöä. Kokeilin alkuun tehdä tehtävänannon mukaan, mutta suomeksi:
 
 ```bash
@@ -501,6 +505,8 @@ Muokkasin nanolla **/etc/hosts**-tiedostoa ja lisäsin rivin 127.0.0.1 minux.loc
 
 <br>
 
+### Asennetaan UFW
+
 Seuraavaksi asennetaan UFW eli uncomplicated firewall. Sallitaan portit 22, 80 ja 443 ja poistetaan nanolla IPv6 käytöstä turhaan häiritsemästä:
 
 <p align="center">
@@ -516,8 +522,9 @@ sudo ufw deny 80/tcp.
 ```
 Vaikka sääntö näkyi UFW:n tilassa, verkkosivu avautui edelleen osoitteesta http://minux.local. Tämä johtuu siitä, että minux.local on määritelty /etc/hosts-tiedostossa osoitteeseen 127.0.0.1, joka on localhostin loopback-osoite. Loopback-liikennettä ei normaalisti suodateta samalla tavalla kuin ulkoisia verkkoyhteyksiä. Tämän perusteella voidaan päätellä, että UFW estää ulkopuolelta tulevia yhteyksiä porttiin 80, mutta localhostista localhostiin kulkeva liikenne toimii edelleen.
 
+### Luodaan nimipohjainen virtuaalipalvelin
 
-Sitten luodaan nimipohjainen virtuaalipalvelin hakemistoon:
+Tässä kohdin luodaan nimipohjainen virtuaalipalvelin hakemistoon:
 
 ```bash
 mkdir -p ~/public_html/minux
@@ -619,7 +626,88 @@ Ja kun tarkistetaan vielä käyttöloki niin siitä näkee, että statuskoodi on
 </p>
 
 
+## Challenge
 
+Seuraavaksi luodaan toinen sivustohakemisto kotihakemistooni:
+```bash
+mkdir -p ~/public_html-2
+```
+```bash
+echo "Toinen verkkosivu." > ~/public_html-2/index.html
+```
 
+Lisätään uusi nimi nanolla /etc/hosts-tiedostoon:
 
+<p align="center">
+ <img width="739" height="258" alt="Näyttökuva 2026-09-04 072354" src="https://github.com/user-attachments/assets/ae6b190f-6fc5-4ae2-812f-0685767c96a2" />
+  <br>
+  <em>Kuva 14. Uusi nimi</em>
+</p>
 
+<br>
+
+Luodaan konfiguraatiotiedosto:
+
+```bash
+sudo nano /etc/apache2/sites-available/munix.local.conf
+```
+
+ja lisätään sisällöksi: 
+
+```bash
+<VirtualHost *:80>
+    ServerName munix.local
+    ServerAlias www.munix.local
+
+    DocumentRoot /home/mikko/public_html-2/munix
+
+    <Directory /home/mikko/public_html-2/munix>
+        Require all granted
+    </Directory>
+
+    ErrorLog ${APACHE_LOG_DIR}/error-site2.log
+    CustomLog ${APACHE_LOG_DIR}/access-site2.log combined
+</VirtualHost>
+```
+jonka jälkeen tallennetaan konfiguraatiotiedosto.
+
+Nyt otetaan sivusto käyttöön...
+```bash
+sudo a2ensite munix.local.conf
+```
+...ladataan Apache uudelleen...
+```bash
+sudo systemctl reload apache2
+```
+...ja tarkistetaan määritys, ettei siinä ole virheitä:
+```bash
+sudo apache2ctl configtest
+```
+
+<br>
+
+<p align="center">
+ <img width="726" height="107" alt="image" src="https://github.com/user-attachments/assets/0e131bc0-322b-46b6-be12-ca2d42998b94" />
+  <br>
+  <em>Kuva 15. Syntaksi näyttäisi olevan OK</em>
+</p>
+
+<br>
+
+Kun kokeilin avata sivua selaimelta, sivu palautti virheen 403 Forbidden. Tutkimalla asetuksia huomasin, että DocumentRoot osoitti hakemistoon /home/mikko/public_html-2/munix, mutta olin unohtanut luoda kyseisen hakemiston aiemmin. Kun hakemisto luotiin ja sivuston tiedostot sijoitettiin siihen seuraavilla komennoilla...
+
+```bash
+mkdir ~/public_html-2/munix
+```
+
+```bash
+mv ~/public_html-2/index.html ~/public_html-2/munix/
+```
+
+...sivusto alkoi toimia normaalisti:
+
+<p align="center">
+ <img width="694" height="214" alt="image" src="https://github.com/user-attachments/assets/22cabeb1-0a2f-44bf-bcc9-7162b88fa1f7" />
+  <br>
+  <em>Kuva 16. Virhe korjattu/em>
+</p>
