@@ -135,13 +135,13 @@ ja avataan toinenkin terminaali ja yhdistetään myös sillä etäpalvelimelle.
 
 #### HTTP-liikenteen tutkiminen
 
-Suoritetaan 1 terminaalissa komento:
+Suoritetaan **1 terminaalissa** komento:
 
 ```bash
 sudo ngrep -d eth0 -W byline "" host <oma-julkinen-IP> and port 80
 ```
 
-ja luodaan 2 terminaalissa liikennettä:
+ja luodaan **2 terminaalissa** http-liikennettä:
 
 ```bash
 url http://<oma-julkinen-IP>
@@ -218,7 +218,7 @@ Suoritettu ngrep-komento ```sudo ngrep -d eth0 -W byline "" host <oma-julkinen-I
 
 #### SSH
 
-Nyt 1 terminaalissa suoritetaan seuraava komento:
+Nyt **1 terminaalissa** suoritetaan seuraava komento:
 
  ```bash
 sudo ngrep -d eth0 -W byline "" port 22 
@@ -262,4 +262,88 @@ V
 ```
 </details>
 
-Eli SSH-liikennettä tutkaillessa syntyi lähinnä kasa epäselvää sotkua. Silti tulosteessa näkyi lähde- ja kohde-IP-osoitteet ja portit, liikenteen kulkusuunta ja pakettien koot ja määrät. Tunnuksia, salasanoja tai muuta selvää tekstiä ei tulosteesta löytynyt. Varmaankin lienee se syy miksi tätä protokollaa kutsutaan Secure Shelliksi. Liikenteessä näkyi oma julkinen IP-osoitteeni sekä palvelimen sisäinen IP-osoite. Eli tämä havainto tukee aiemmin opittua: virtuaalikone näkee oman osoitteensa vain sisäisenä IP-osoitteena, mutta yhteyttä muodostavan tahon julkinen IP-osoite näkyy normaalisti verkkoliikenteessä.
+Eli SSH-liikennettä tutkaillessa syntyi lähinnä kasa epäselvää sotkua. Silti tulosteessa näkyi lähde- ja kohde-IP-osoitteet ja portit, liikenteen kulkusuunta ja pakettien koot ja määrät. Tunnuksia, salasanoja tai muuta selvää tekstiä ei tulosteesta löytynyt. Varmaankin lienee se syy miksi tätä protokollaa kutsutaan Secure Shelliksi. Liikenteessä näkyi oma julkinen IP-osoitteeni sekä palvelimen sisäinen IP-osoite. Tämä havainto siis tukee aiemmin opittua: virtuaalikone näkee oman osoitteensa vain sisäisenä IP-osoitteena, mutta yhteyttä muodostavan tahon julkinen IP-osoite näkyy normaalisti verkkoliikenteessä.
+
+#### Ping
+
+Tällä kertaa **1 terminaalissa** suoritetaan komento:
+
+```bash
+sudo ngrep -d eth0 -W byline "" icmp 
+```
+
+ja **2 terminaalissa** pingataan Googlen DNS:n eli **8.8.8.8**:
+
+```bash
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=113 time=0.900 ms
+64 bytes from 8.8.8.8: icmp_seq=2 ttl=113 time=0.903 ms
+64 bytes from 8.8.8.8: icmp_seq=3 ttl=113 time=0.800 ms
+64 bytes from 8.8.8.8: icmp_seq=4 ttl=113 time=0.816 ms
+```
+
+Tämä liikenne näkyy 1 terminaalissa:
+
+<details>
+<summary>Näytä tuloste</summary>
+
+ ```bash
+I 10.0.0.33 -> 8.8.8.8 8:0 #1
+....S..j.....)...................... !"#$%&'()*+,-./01234567
+#
+I 8.8.8.8 -> 10.0.0.33 0:0 #2
+....S..j.....)...................... !"#$%&'()*+,-./01234567
+#
+I 10.0.0.33 -> 8.8.8.8 8:0 #3
+....T..j............................ !"#$%&'()*+,-./01234567
+#
+I 8.8.8.8 -> 10.0.0.33 0:0 #4
+....T..j............................ !"#$%&'()*+,-./01234567
+#
+I 10.0.0.33 -> 8.8.8.8 8:0 #5
+....U..j....Y....................... !"#$%&'()*+,-./01234567
+#
+I 8.8.8.8 -> 10.0.0.33 0:0 #6
+....U..j....Y....................... !"#$%&'()*+,-./01234567
+#
+I 10.0.0.33 -> 8.8.8.8 8:0 #7
+....V..j....%>...................... !"#$%&'()*+,-./01234567
+#
+I 8.8.8.8 -> 10.0.0.33 0:0 #8
+....V..j....%>...................... !"#$%&'()*+,-./01234567
+```
+</details>
+
+
+<br>
+<br>
+
+Jos käytämme tällä kertaa liikenteen tutkimiseen **tcpdump**ia komennolla: 
+
+```bash
+sudo tcpdump -i eth0 icmp
+```
+
+niin 2 terminaalissa pingaus Googlen DNS:n:
+
+```bash
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=113 time=0.868 ms
+64 bytes from 8.8.8.8: icmp_seq=2 ttl=113 time=0.878 ms
+64 bytes from 8.8.8.8: icmp_seq=3 ttl=113 time=0.976 ms
+64 bytes from 8.8.8.8: icmp_seq=4 ttl=113 time=0.856 ms
+```
+
+liikenne näkyy 1 terminaalissa seuraavanlaisesti
+
+<details>
+<summary>Näytä tuloste</summary>
+ ```bash
+15:57:15.803145 IP tls-test023 > dns.google: ICMP echo request, id 3, seq 1, length 64
+15:57:15.803996 IP dns.google > tls-test023: ICMP echo reply, id 3, seq 1, length 64
+15:57:16.812214 IP tls-test023 > dns.google: ICMP echo request, id 3, seq 2, length 64
+15:57:16.813072 IP dns.google > tls-test023: ICMP echo reply, id 3, seq 2, length 64
+15:57:17.836197 IP tls-test023 > dns.google: ICMP echo request, id 3, seq 3, length 64
+15:57:17.837158 IP dns.google > tls-test023: ICMP echo reply, id 3, seq 3, length 64
+15:57:18.837275 IP tls-test023 > dns.google: ICMP echo request, id 3, seq 4, length 64
+15:57:18.838108 IP dns.google > tls-test023: ICMP echo reply, id 3, seq 4, length 64
+```
+</details>
