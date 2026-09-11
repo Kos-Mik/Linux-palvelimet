@@ -2,7 +2,7 @@
 
 ## Johdanto 
 
-Tässä tehtävässä käytetään Azure-ympäristöön luotuja Linux-virtuaalikoneita harjoitusalustana. Työskentely tapahtuu etäyhteyden kautta palvelimelle, jolle on määritetty kiinteä julkinen IP-osoite.
+Tässä tehtävässä käytetään Azure-ympäristöön luotuja Linux-virtuaalikoneita harjoitusalustana. Työskentely tapahtuu etäyhteyden kautta palvelimelle, jolle on määritetty kiinteä julkinen IP-osoite. Osoitteet ja muut yksilöivät tiedot ovat osittain tietoturvasyistä obfuskoitu.
 
 ## Ohjelmistojen päivitykset
 
@@ -156,7 +156,7 @@ Tällöin saatiin seuraavanlainen tuloste:
 ######
 T 10.0.xx.xx:36222 -> 4.231.xxx.xxx:80 [AP] #6
 GET / HTTP/1.1.
-Host: 4.231.219.225.
+Host: 4.231.xxx.xxx.
 User-Agent: curl/8.14.1.
 Accept: */*.
 .
@@ -164,7 +164,7 @@ Accept: */*.
 ##
 T 4.231.xx.xx:36222 -> 10.0.xx.xx:80 [AP] #8
 GET / HTTP/1.1.
-Host: 4.231.219.225.
+Host: 4.231.xxx.xxx.
 User-Agent: curl/8.14.1.
 Accept: */*.
 .
@@ -287,25 +287,25 @@ Tämä liikenne näkyy 1 terminaalissa:
 <summary>Näytä tuloste</summary>
 
  ```bash
-I 10.0.0.33 -> 8.8.8.8 8:0 #1
+I 10.0.xx.xx -> 8.8.8.8 8:0 #1
 ....S..j.....)...................... !"#$%&'()*+,-./01234567
 #
-I 8.8.8.8 -> 10.0.0.33 0:0 #2
+I 8.8.8.8 -> 10.0.xx.xx 0:0 #2
 ....S..j.....)...................... !"#$%&'()*+,-./01234567
 #
-I 10.0.0.33 -> 8.8.8.8 8:0 #3
+I 10.0.xx.xx -> 8.8.8.8 8:0 #3
 ....T..j............................ !"#$%&'()*+,-./01234567
 #
-I 8.8.8.8 -> 10.0.0.33 0:0 #4
+I 8.8.8.8 -> 10.0.xx.xx 0:0 #4
 ....T..j............................ !"#$%&'()*+,-./01234567
 #
-I 10.0.0.33 -> 8.8.8.8 8:0 #5
+I 10.0.xx.xx -> 8.8.8.8 8:0 #5
 ....U..j....Y....................... !"#$%&'()*+,-./01234567
 #
-I 8.8.8.8 -> 10.0.0.33 0:0 #6
+I 8.8.8.8 -> 10.0.xx.xx 0:0 #6
 ....U..j....Y....................... !"#$%&'()*+,-./01234567
 #
-I 10.0.0.33 -> 8.8.8.8 8:0 #7
+I 10.0.xx.xx -> 8.8.8.8 8:0 #7
 ....V..j....%>...................... !"#$%&'()*+,-./01234567
 #
 I 8.8.8.8 -> 10.0.0.33 0:0 #8
@@ -336,14 +336,70 @@ liikenne näkyy 1 terminaalissa seuraavanlaisesti
 
 <details>
 <summary>Näytä tuloste</summary>
- ```bash
-15:57:15.803145 IP tls-test023 > dns.google: ICMP echo request, id 3, seq 1, length 64
-15:57:15.803996 IP dns.google > tls-test023: ICMP echo reply, id 3, seq 1, length 64
-15:57:16.812214 IP tls-test023 > dns.google: ICMP echo request, id 3, seq 2, length 64
-15:57:16.813072 IP dns.google > tls-test023: ICMP echo reply, id 3, seq 2, length 64
-15:57:17.836197 IP tls-test023 > dns.google: ICMP echo request, id 3, seq 3, length 64
-15:57:17.837158 IP dns.google > tls-test023: ICMP echo reply, id 3, seq 3, length 64
-15:57:18.837275 IP tls-test023 > dns.google: ICMP echo request, id 3, seq 4, length 64
-15:57:18.838108 IP dns.google > tls-test023: ICMP echo reply, id 3, seq 4, length 64
+
+```bash
+15:57:15.803145 IP tls-testxxx > dns.google: ICMP echo request, id 3, seq 1, length 64
+15:57:15.803996 IP dns.google > tls-testxxx: ICMP echo reply, id 3, seq 1, length 64
+15:57:16.812214 IP tls-testxxx > dns.google: ICMP echo request, id 3, seq 2, length 64
+15:57:16.813072 IP dns.google > tls-testxxx: ICMP echo reply, id 3, seq 2, length 64
+15:57:17.836197 IP tls-testxxx > dns.google: ICMP echo request, id 3, seq 3, length 64
+15:57:17.837158 IP dns.google > tls-testxxx: ICMP echo reply, id 3, seq 3, length 64
+15:57:18.837275 IP tls-testxxx > dns.google: ICMP echo request, id 3, seq 4, length 64
+15:57:18.838108 IP dns.google > tls-testxxx: ICMP echo reply, id 3, seq 4, length 64
 ```
+
 </details>
+
+<br>
+
+Sekä **ngrep** että **tcpdump** näyttivät ICMP-pakettien kulkevan palvelimen ja Googlen DNS-palvelimen (8.8.8.8) välillä. Molemmista näkyivät echo Request- ja echo reply -viestit, jotka syntyvät ping-komennon yhteydessä.
+Ngrep näytti pakettien sisällöstä enemmän raakadataa ja hyötykuormaa, kun taas tcpdumpin tuloste oli helpompi tulkita. Ngrep siis soveltuu hyvin pakettien sisällön tarkasteluun ja tekstipohjaisen datan analysointiin. Tcpdump taas antaa paremman yleiskuvan verkkoliikenteestä ja esittää protokollatiedot selkeämmin.
+
+### Challenge edituser
+
+Tässä osiossa luodaan **edituser**-niminen käyttäjä etäpalvelimella. Tarkoituksena on, että edituserilla ei ole sudo-oikeuksia vaan tarkoituksena on ainoastaan päästä muokkaamaan web-sisältöä. 
+
+Ensin luodaan käyttäjä: 
+
+```bash
+sudo adduser edituser 
+```
+
+sitten luodaan **webdev**-ryhmä:
+
+```bash
+sudo groupadd webdev
+```
+
+lisätään sekä linuxuser että edituser kyseiseen ryhmään ja halutessa tarkistetaan tämän jälkeen ryhmät ja oikeudet (kuva 12):
+
+```bash
+sudo usermod -aG webdev linuxuser
+```
+```bash
+sudo usermod -aG webdev edituser
+```
+
+asetetaan hakemiston ryhmä:
+
+```bash
+sudo chgrp webdev /home/linuxuser/public-sites
+```
+
+asetetaan setgid-bitti: 
+
+```bash
+sudo chmod 2775 /home/linuxuser/public-sites
+```
+
+Kyseisessä komennossa numero 2 asettaa setgid-bitin hakemistolle ja 775 ovat normaaleja Linux-oikeuksia (7 = rwx eli **omistaja**, 7 = rwx eli **ryhmä**, 5 = r-x eli **muut**. Omistaja ja ryhmä saavat lukea, kirjoittaa ja suorittaa ja muut vain lukea ja suorittaa). 
+
+<p align="center">
+<img width="723" height="435" alt="image" src="https://github.com/user-attachments/assets/f183068e-1335-4bc7-82b3-54f5159b3be4" />
+  <br>
+  <em>Kuva 12. Käyttäjät, ryhmät ja oikeudet</em>
+</p>
+
+<br>
+<br>
+
