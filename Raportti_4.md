@@ -403,3 +403,70 @@ Kyseisessä komennossa numero 2 asettaa setgid-bitin hakemistolle ja 775 ovat no
 <br>
 <br>
 
+Seuraavaksi testataan luomalla tiedostoja public-sites -hakemistoon kummallakin käyttäjällä. Ensin linuxuser-käyttäjällä:
+
+```bash
+touch /home/linuxuser/public-sites/linuxuser_testi.txt
+```
+
+sen jälkeen edituser-käyttäjällä:
+
+```bash
+touch /home/linuxuser/public-sites/edituser_testi.txt
+```
+
+Mutta voi! Olin unohtanut antaa oikeudet edituser-käyttäjälle kulkea hakemiston /home/linuxuser läpi hakemistoon /home/linuxuser/public-sites. Tämä oikeus on vain linuxuser-käyttäjällä. Siksi seuraavanlainen rienaus tulikin, kun yritin luoda testitiedostoa edituser-käyttäjänä:
+
+<p align="center">
+<img width="726" height="55" alt="image" src="https://github.com/user-attachments/assets/a1eaf10f-354a-4123-89f2-699f6e5255dd" />
+<img width="726" height="40" alt="image" src="https://github.com/user-attachments/assets/db56ac8f-1827-4260-8061-35513d7d0647" />
+  <br>
+  <em>Kuvat 13 ja 14. Can't touch this - ei riitä oikeudet</em>
+</p>
+
+<br>
+<br>
+
+Lisäsin linuxuser-käyttäjänä nyt uusia oikeuksia (setgid ja kotihakemiston omistaja on edelleen linuxuser, mutta ryhmä on nyt yhteinen webdev. Omistajan oikeudet eivät ole muuttuneet, mutta ryhmä saa nyt myös nähdä hakemiston sisällön ja kulkea sen läpi):
+
+<p align="center">
+<img width="601" height="44" alt="image" src="https://github.com/user-attachments/assets/2c874449-a122-4641-8c56-aed8e6092be0" />
+<img width="617" height="38" alt="image" src="https://github.com/user-attachments/assets/43dbf7b1-e909-41b2-826b-2ddda3a5856f" />
+  <br>
+  <em>Kuvat 15 ja 16. Can touch this - nyt riittää oikeudet</em>
+</p>
+<br>
+<br>
+Ja nyt sai luotua testitiedoston myös edituser-käyttäjällä ja molemmat näkyvät hakemistossa:
+
+<p align="center">
+<img width="726" height="93" alt="image" src="https://github.com/user-attachments/assets/3f0b46a7-b129-4819-92f4-714ebedcc860" />
+  <br>
+  <em>Kuva 17. Molempien käyttäjien testitiedostot</em>
+</p>
+<br>
+<br>
+
+Nyt kokeeksi muokataan toisen luomaa tiedostoa. Käytän tässä testinä edituser-käyttäjää, koska tällä on linuxuseria vähemmän oikeuksia:
+
+```bash
+echo "muokattu'd" >> /home/linuxuser/public-sites/linuxuser_testi.txt
+```
+
+Katsotaan tämän jälkeen onko sisältö muuttunut:
+
+```bash
+cat /home/linuxuser/public-sites/linuxuser_testi.txt
+```
+
+<p align="center">
+<img width="725" height="72" alt="image" src="https://github.com/user-attachments/assets/363b0b75-1900-49de-acfc-3102708cc820" />
+  <br>
+  <em>Kuva 18. Muokkaus onnistui</em>
+</p>
+<br>
+<br>
+
+
+
+
