@@ -468,5 +468,29 @@ cat /home/linuxuser/public-sites/linuxuser_testi.txt
 <br>
 
 
+Lopuksi siirretään omalta virtuaalikoneelta tiedosto etäpalvelimeen **SFTP**-protokollan avulla. Ensin luon testitiedoston:
+
+```bash
+echo "No hei!" > minux_testi.txt
+```
+
+tämän jälkeen yhdistän etäpalvelimeen SFTP-protokollalla ja siirrän luomani testitiedoston:
+
+```bash
+sftp linuxuser@4.231.xxx.xxx
+```
+```bash
+put minux_testi.txt /home/linuxuser/public-sites/
+```
 
 
+<p align="center">
+<img width="723" height="114" alt="image" src="https://github.com/user-attachments/assets/ad27e217-8469-4f23-86c9-2318bcbbfd66" />
+<img width="757" height="129" alt="image" src="https://github.com/user-attachments/assets/6d54254a-3c1f-41e7-adfe-3fd0e8892f67" />
+  <br>
+  <em>Kuvat 19 ja 20. Siirto onnistui ja sisältö on sama</em>
+</p>
+<br>
+<br>
+
+SFTP-siirto onnistui ongelmitta. Siirretty tiedosto näkyi public-sites-hakemistossa ja sen sisältö säilyi ennallaan. Lisäksi tiedosto peri hakemiston yhteisen ryhmän (webdev), mikä osoittaa, että setgid-asetus toimii oikein. Tiedoston omistajaksi tuli käyttäjä, jolla SFTP-yhteys muodostettiin (tässä tapauksessa siis linuxuser).
