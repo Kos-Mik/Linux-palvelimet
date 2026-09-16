@@ -45,8 +45,6 @@ Tämä johtuu siitä, että kysely lähetettiin nyt ulkoiseen verkkoon DNS-palve
 
 Nyt pitää luoda etäpalvelimelle nimipohjainen virtuaalipalvelin. Aloitetaan ensin luomalla **nano**n avulla viime tehtävässä luotuun hakemistoon index.html-sivu komennolla ```nano /home/linuxuser/public-sites/index.html```, laittamalla sisällöksi **This is my public web server** ja tallentamalla se. 
 
-
-
 Luodaan vielä ylimääräiset tekstitiedostot sekä linuxuser-tunnuksilla että edituser-tunnuksilla:
 
 **linuxuser:**
@@ -69,3 +67,37 @@ Tämän jälkeen avattu ne selaimella:
 </p>
 <br>
 <br>
+
+## TLS Certificate
+
+Asennettu certbot-työkalu komennolla ```sudo apt install certbot python3-certbot-apache``` ja sen jälkeen luodaan TLS-sertifikaatti omalle sivustolle:
+
+```bash
+sudo certbot --apache -d tls-testXXX.linuxkurssi.xyz,www.tls-testXXX.linuxkurssi.xyz
+```
+Kun sertifikaatti on valmis, avataan selaimella sivusto uudelleen ja https-suojaus on nyt päällä:
+
+<p align="center">
+<img width="678" height="271" alt="image" src="https://github.com/user-attachments/assets/eb2dab3c-9c64-4cb1-b48c-a36e15efef98" />
+  <br>
+  <em>Kuva 7. Sertifikaatti asennettu onnistuneesti.</em>
+</p>
+<br>
+<br>
+
+Tästä huolimatta **crt.sh**-sivusto ei havainnut sertifikaattia vaan antoi vain ilmoituksen "none found". Kuitenkin curl-tulosteesta ja sertifikaatin uusinnan dry-runista voi päätellä, että sertifikaatti on asentunut täysin onnistuneesti. Voi olla, että crt.sh-sivustolla vain kestää jonkin aikaa ennen kuin se rekisteröi vastikään asennetun sertifikaatin:
+
+<p align="center">
+<img width="576" height="323" alt="image" src="https://github.com/user-attachments/assets/ea4e8863-97ee-4a93-acd6-9c5841821847" />
+<img width="632" height="177" alt="image" src="https://github.com/user-attachments/assets/9e1a8684-5cab-4b3f-a9ab-7913ff8f2fa0" />
+<img width="759" height="237" alt="image" src="https://github.com/user-attachments/assets/f4a03395-0bdc-4cc3-b9d3-9f867c6d745b" />
+
+  <br>
+  <em>Kuvat 8, 9 ja 10. Tilastollisesti kaksi positiivista tulosta kolmesta ei ole paha.</em>
+</p>
+<br>
+<br>
+
+## Monitoring – curl in verbose mode
+
+
