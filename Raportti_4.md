@@ -1,4 +1,4 @@
-# Linux-harjoitukset
+# Palvelimen Perusasetukset
 
 ## Johdanto 
 
