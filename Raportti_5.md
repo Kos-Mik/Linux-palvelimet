@@ -2,7 +2,7 @@
 
 ## Johdanto 
 
-Tässä harjoituksessa luodaan Apachelle nimipohjainen VirtualHost, otetaan käyttöön tls-sertifikaatti Let's Encryptin avulla sekä testataan http- ja https-yhteyksien toimintaa. Lisäksi määritetään http-liikenteen automaattinen uudelleenohjaus https-yhteyteen. Osoitteet ja muut yksilöivät tiedot ovat osittain tietoturvasyistä obfuskoitu.
+Tässä harjoituksessa luodaan Apachelle nimipohjainen virtuaalipalvelin, otetaan käyttöön tls-sertifikaatti Let's Encryptin avulla sekä testataan http- ja https-yhteyksien toimintaa. Lisäksi määritetään http-liikenteen automaattinen uudelleenohjaus https-yhteyteen. Osoitteet ja muut yksilöivät tiedot ovat osittain tietoturvasyistä obfuskoitu.
 
 ## DNS
 
@@ -250,3 +250,9 @@ Lopuksi palautetaan uudelleenohjaus poistamalla kommenttimerkit.
 
 ## TLS - Summary 
 
+TLS muodostaa selaimen ja palvelimen välille salatun yhteyden, jonka ansiosta tiedot voidaan siirtää turvallisesti internetin kautta. Lisäksi TLS auttaa varmistamaan, että yhteys muodostetaan oikeaan palvelimeen eikä tietoja voida muuttaa niiden siirtyessä verkon yli. Tämä on tärkeää erityisesti silloin, kun siirretään käyttäjätunnuksia, salasanoja tai muuta luottamuksellista tietoa (Cloudflare).  
+
+
+## Lähteet
+
+Cloudflare. What is Transport Layer Security (TLS)? Luettavissa: https://www.cloudflare.com/learning/ssl/transport-layer-security-tls/. Luettu 16.9.2026.
