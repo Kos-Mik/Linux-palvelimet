@@ -31,7 +31,7 @@ Syy tähän on se, että dig käytti paikallista resolveria (127.0.0.53), joten 
 ```dig tls-testXXX.linuxkurssi.xyz @8.8.8.8``` eli tein DNS-kyselyn suoraan Googlen DNS-palvelimelle, tcpdump havaitsi DNS-liikenteen: 
 
 <p align="center">
-<img width="652" height="184" alt="image" src="https://github.com/user-attachments/assets/2cf73d34-f0e4-430f-9593-009e30090411" />
+<img width="652" height="218" alt="image" src="https://github.com/user-attachments/assets/38afb7a7-e1f7-471b-8fdb-816882f50997" />
   <br>
   <em>Kuva 3. DNS-liikennettä havaittu!</em>
 </p>
@@ -43,21 +43,29 @@ Tämä johtuu siitä, että kysely lähetettiin nyt ulkoiseen verkkoon DNS-palve
 
 ## Name-Based VirtualHost
 
+Nyt pitää luoda etäpalvelimelle nimipohjainen virtuaalipalvelin. Aloitetaan ensin luomalla **nano**n avulla viime tehtävässä luotuun hakemistoon index.html-sivu komennolla ```nano /home/linuxuser/public-sites/index.html```, laittamalla sisällöksi **This is my public web server** ja tallentamalla se. 
 
 
 
-```sudo tcpdump -i eth0 port 53 -n -v```
+Luodaan vielä ylimääräiset tekstitiedostot sekä linuxuser-tunnuksilla että edituser-tunnuksilla:
+
+**linuxuser:**
 ```bash
-sudo apt upgrade -y
+echo "Luotu linuxuserilla" > ~/public-sites/linuxuser.txt
+```
+**edituser:**
+```bash
+echo "Luotu edituserilla" > /home/linuxuser/public-sites/edituser.txt
 ```
 
+Tämän jälkeen avattu ne selaimella:
 
 <p align="center">
-<img width="718" height="111" alt="image" src="https://github.com/user-attachments/assets/958553af-29ae-4b9d-a43b-ff777e8394b7" />
+<img width="606" height="149" alt="image" src="https://github.com/user-attachments/assets/6f343445-f120-41eb-9642-eddfa9582378" />
+<img width="606" height="149" alt="image" src="https://github.com/user-attachments/assets/eed589a6-1026-4f3c-92a3-9429c6c5050e" />
+<img width="606" height="149" alt="image" src="https://github.com/user-attachments/assets/9698afc8-134a-4e1f-8e29-2bb0fe1af5d7" />
   <br>
-  <em>Kuva 1. Salasanan onnistunut päivitys.</em>
+  <em>Kuvat 4, 5 ja 6. Sivustot</em>
 </p>
 <br>
 <br>
-
-## SSH-avaimen luonti
