@@ -2,8 +2,7 @@
 
 ## Johdanto 
 
-
-Osoitteet ja muut yksilöivät tiedot ovat osittain tietoturvasyistä obfuskoitu.
+Tässä harjoituksessa luodaan Apachelle nimipohjainen VirtualHost, otetaan käyttöön tls-sertifikaatti Let's Encryptin avulla sekä testataan http- ja https-yhteyksien toimintaa. Lisäksi määritetään http-liikenteen automaattinen uudelleenohjaus https-yhteyteen. Osoitteet ja muut yksilöivät tiedot ovat osittain tietoturvasyistä obfuskoitu.
 
 ## DNS
 
@@ -161,7 +160,60 @@ This is my public web server
 ```
 </details>
 
-Kun puolestaan http-yhteyttä tarkasteltiin komennolla ```curl -v http://tls-test0xx.linuxkurssi.xyz```, tulosteessa näkyivät HTTP-pyyntö ja palvelimen vastaus (GET / HTTP/1.1 ja Host: tls-test0xx.linuxkurssi.xyz) selväkielisinä. Koska HTTP ei käytä salausta, kaikki pyynnöt, vastaukset, otsakkeet sekä siirrettävä sisältö voidaan nähdä sellaisenaan verkkoliikennettä seuraamalla.
+Kun puolestaan http-yhteyttä tarkasteltiin komennolla ```curl -v http://tls-test0xx.linuxkurssi.xyz```, tulosteessa näkyi, että http-pyyntö palautti vastauksen 301 Moved Permanently. Palvelin ei enää tarjonnut sivuston sisältöä suoraan http:n kautta, vaan ohjasi suoraan https-osoitteeseen https://tls-test0xx.linuxkurssi.xyz/.
+
+<details>
+<summary>Näytä tuloste</summary>
+  
+```bash
+* Host tls-test0xx.linuxkurssi.xyz:80 was resolved.
+* IPv6: (none)
+* IPv4: 4.231.xxx.xxx
+*   Trying 4.231.xxx.xxx:80...
+* Connected to tls-test0xx.linuxkurssi.xyz (4.231.xxx.xxx) port 80
+* using HTTP/1.x
+> GET / HTTP/1.1
+> Host: tls-test0xx.linuxkurssi.xyz
+> User-Agent: curl/8.14.1
+> Accept: */*
+> 
+* Request completely sent off
+< HTTP/1.1 301 Moved Permanently
+< Date: Wed, 16 Sep 2026 16:05:33 GMT
+< Server: Apache/2.4.68 (Debian)
+< Location: https://tls-test0xx.linuxkurssi.xyz/
+< Content-Length: 377
+< Content-Type: text/html; charset=iso-8859-1
+< 
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+<title>301 Moved Permanently</title>
+</head><body>
+<h1>Moved Permanently</h1>
+<p>The document has moved <a href="https://tls-test0xx.linuxkurssi.xyz/">here</a>.</p>
+<hr>
+<address>Apache/2.4.68 (Debian) Server at tls-test0xx.linuxkurssi.xyz Port 80</address>
+</body></html>
+* Connection #0 to host tls-test0xx.linuxkurssi.xyz left intact
+```
+</details>
+
+Https-liikenteessä voidaan nähdä yhteyden muodostuminen, käytetty TLS-versio ja sertifikaattitiedot, mutta varsinainen sovellusdata on salattua eikä näy verkkoliikennettä seuraamalla. Tämä on https:n selkeä turvallisuusetu. Kuitenkin sekä http- että https-vastauksissa näkyi palvelimen tunnistetietoja sisältävä otsake (Server: Apache/2.4.68 (Debian)). Tämä voi olla turvallisuusriski, koska mahdollinen hyökkääjä saa helposti tietoa käytetystä ohjelmistosta ja sen versiosta ja näiden tietojen perusteella voidaan etsiä tunnettuja haavoittuvuuksia tai kohdistaa hyökkäyksiä tiettyä versiota vastaan.
+
+<br>
+<br>
+
+Nyt muokataan tarkoituksellisesti etäpalvelimen konfiguraatiotiedostoa ottamalla siitä https-uudelleenohjaus pois lisäämällä kommenttimerkit syntaksien eteen ja sen jälkeen ladataan Apache uudelleen:
+
+<p align="center">
+<img width="663" height="343" alt="image" src="https://github.com/user-attachments/assets/fa73b2d2-0856-465b-82a1-266dcbcbb74f" />
+  <br>
+  <em>Kuva 11. Uudelleenohjaus poistettu</em>
+</p>
+<br>
+<br>
+
+Kun tämän jälkeen http-yhteyttä tarkasteltiin komennolla ```curl -v http://tls-test0xx.linuxkurssi.xyz```, tulosteessa näkyivät http-pyyntö ja palvelimen vastaus (GET / HTTP/1.1 ja Host: tls-test0xx.linuxkurssi.xyz) selväkielisinä. Koska http ei käytä salausta, kaikki pyynnöt, vastaukset, otsakkeet sekä siirrettävä sisältö voidaan nähdä selväkielisinä: 
 
 <details>
 <summary>Näytä tuloste</summary>
@@ -194,5 +246,7 @@ This is my public web server
 ```
 </details>
 
-Http-liikenteessä sekä pyynnön että vastauksen sisältö näkyvät selväkielisinä. Https-liikenteessä taas voidaan nähdä yhteyden muodostuminen, käytetty TLS-versio ja sertifikaattitiedot, mutta varsinainen sovellusdata on salattua eikä näy verkkoliikennettä seuraamalla. Tämä on https:n selkeä turvallisuusetu. Kuitenkin sekä http- että https-vastauksissa näkyi palvelimen tunnistetietoja sisältävä otsake (Server: Apache/2.4.68 (Debian)). Tämä voi olla turvallisuusriski, koska mahdollinen hyökkääjä saa helposti tietoa käytetystä ohjelmistosta ja sen versiosta ja näiden tietojen perusteella voidaan etsiä tunnettuja haavoittuvuuksia tai kohdistaa hyökkäyksiä tiettyä versiota vastaan.
+Lopuksi palautetaan uudelleenohjaus poistamalla kommenttimerkit.
+
+## TLS - Summary 
 
