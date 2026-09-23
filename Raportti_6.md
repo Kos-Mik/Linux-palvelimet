@@ -16,6 +16,8 @@ Ensin on tarkistettava GitHubista omat sähköpostiasetukset - ja että GitHub o
 <br>
 <br>
 
+### Local VM
+
 Seuraavaksi mennään paikalliselle virtuaalikoneelle ja asennetaan sinne Git komennolla ```sudo apt install git``` ja tarkastamalla sen versio komennolla ```git --version```:
 
 <p align="center">
@@ -36,3 +38,31 @@ Global user -tiedot lisätään sen vuoksi, että nämä yhdistävät tehdyt com
 </p>
 <br>
 <br>
+
+Nyt luodaan uusi SSH avainpari GitHubia varten ja annetaan sille nimeksi **github_key**. Luodaan samalla nanon avulla SSH-konfiguraatiotiedosto ja laitetaan sinne tarvittavat asetukset, jotta SSH tietää käyttää tätä avainta eikä oletusavainta:
+
+<p align="center">
+<img width="893" height="380" alt="image" src="https://github.com/user-attachments/assets/c541831e-c16c-4ad3-83aa-7ada55af641f" />
+<img width="580" height="146" alt="image" src="https://github.com/user-attachments/assets/f3fa8056-3d70-4c9e-8f45-de24675a0760" />
+  <br>
+  <em>Kuvat 4 ja 5. Luotu SSH-avain ja konfiguraatiotiedosto</em>
+</p>
+<br>
+<br>
+
+Lopuksi lisätään julkinen avain (löytyy komennolla ```cat ~/.ssh/github_key.pub```) GitHubiin ja testataan yhteys vielä komennolla ```ssh -T git@github.com```:
+
+<p align="center">
+<img width="1048" height="556" alt="image" src="https://github.com/user-attachments/assets/8b314f88-72fd-42f7-8719-2893dc2cbbbd" />
+<img width="818" height="56" alt="image" src="https://github.com/user-attachments/assets/23411284-654a-406e-8db7-53af7f1a9d29" />
+
+  <br>
+  <em>Kuvat 6 ja 7. SSH-avain lisättynä GitHubiin ja onnistunut yhteystesti</em>
+</p>
+<br>
+<br>
+
+### Git-testing
+
+
+
