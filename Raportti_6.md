@@ -16,7 +16,7 @@ Ensin on tarkistettava GitHubista omat sähköpostiasetukset - ja että GitHub o
 <br>
 <br>
 
-### Local VM
+#### Local VM
 
 Seuraavaksi mennään paikalliselle virtuaalikoneelle ja asennetaan sinne Git komennolla ```sudo apt install git``` ja tarkastamalla sen versio komennolla ```git --version```:
 
@@ -62,7 +62,60 @@ Lopuksi lisätään julkinen avain (löytyy komennolla ```cat ~/.ssh/github_key.
 <br>
 <br>
 
-### Git-testing
+#### Git-testing
+
+Avaan GitHubissa kurssia varten luodun testirepositorion osoitteesta https://github.com/linuxkurssi/git-testing/tree/main ja kopioin sieltä kloonaamista varten SSH-URLin:
+
+<p align="center">
+<img width="399" height="325" alt="image" src="https://github.com/user-attachments/assets/d508815a-9c67-4c67-aed3-ebf0b14259a1" />
+  <br>
+  <em>Kuva 8. SSH-URL</em>
+</p>
+<br>
+<br>
+
+Tämän jälkeen kloonaan virtuaalikoneen kautta repositorion ja katson, että se löytyy hakemistosta:
+
+<p align="center">
+<img width="676" height="197" alt="image" src="https://github.com/user-attachments/assets/30df192d-fb19-4602-bb2e-67c93bf85640" />
+  <br>
+  <em>Kuva 9. SSH-URL</em>
+</p>
+<br>
+<br>
+
+Tämän jälkeen loin nanolla Linux-vinkin sisältävän txt-tiedoston samaan hakemistoon, tallensin sen ja tarkistin varmuuden vuoksi mikä tiedosto on uusin komennolla ```git status```:
+
+<p align="center">
+<img width="529" height="198" alt="image" src="https://github.com/user-attachments/assets/243a1435-d53b-457d-85ac-e392ead31379" />
+<img width="697" height="162" alt="image" src="https://github.com/user-attachments/assets/9e68ff4d-5e3c-4ef9-b0af-f435def6a8ea" />
+
+  <br>
+  <em>Kuva 10. Vinkki</em>
+</p>
+<br>
+<br>
+
+Nyt on aika lisätä vinkkini testirepositorioon. Laittamalla git add, git commit ja lopuksi git push -komennot tiedostoni on lähetetty onnistuneesti GitHubiin. Unohdin aluksi käydä hyväksymässä opettajan kutsun testirepositorioon, joten push ei onnistunut. Hyväksymisen jälkeen push onnistui:
+
+<p align="center">
+<img width="710" height="451" alt="image" src="https://github.com/user-attachments/assets/45559c1e-d4e3-45c7-b0ed-f5ffa0fd723f" />
+<img width="1325" height="211" alt="image" src="https://github.com/user-attachments/assets/d7beb434-98d5-4974-be96-8a3e5f038d04" />
+  <br>
+  <em>Kuvat 11 ja 12. Välivaiheet ja muokkaukseni repositoriossa</em>
+</p>
+<br>
+<br>
+
+Lopuksi luin vielä toisten antamia Linux-vinkkejä:
+
+<p align="center">
+<img width="726" height="288" alt="image" src="https://github.com/user-attachments/assets/bae11316-f34f-4c66-a924-5f00ccde060b" />
+  <br>
+  <em>Kuva 13. Toisen käyttäjän luoma Linux-vinkki</em>
+</p>
+<br>
+<br>
 
 
 
