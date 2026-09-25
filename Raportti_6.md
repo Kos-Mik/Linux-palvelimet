@@ -118,4 +118,85 @@ Lopuksi luin vielä toisten antamia Linux-vinkkejä:
 <br>
 
 
+#### Challenge: Docker
+
+Tarkoituksena on asentaa Docker omalle virtuaalikoneelle. Asennusohjeet löytyvät suoraan copy & pastella Dockerin sivulta https://docs.docker.com/engine/install/debian/, ja koska virtuaalikoneellani ei ole vanhoja Dockerin versioita, jotka vaatisivat putsaamista, on asennus melkoisen suoraviivaista.
+
+Ensin määritetään Dockerin apt-pakettilähde:
+
+```bash
+# Add Docker's official GPG key:
+sudo apt update
+sudo apt install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# Add the repository to Apt sources:
+sudo tee /etc/apt/sources.list.d/docker.sources <<EOF
+Types: deb
+URIs: https://download.docker.com/linux/debian
+Suites: $(. /etc/os-release && echo "$VERSION_CODENAME")
+Components: stable
+Architectures: $(dpkg --print-architecture)
+Signed-By: /etc/apt/keyrings/docker.asc
+EOF
+
+sudo apt update
+```
+
+Seuraavaksi asennetaan Dockerin viimeisimmät paketit:
+
+```bash
+sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
+
+Asennuksen jälkeen tarkistetaan, että Docker on käynnistynyt:
+
+```bash
+sudo systemctl status docker
+```
+
+<p align="center">
+<img width="865" height="455" alt="Näyttökuva 2026-09-24 194002" src="https://github.com/user-attachments/assets/54f672e3-6072-488c-a7d3-e4405459a067" />
+  <br>
+  <em>Kuva 14. Docker on käynnissä</em>
+</p>
+<br>
+<br>
+
+Lopuksi suoritetaan Dockerin hello-world -konttikuva, jolla varmistetaan asennuksen onnistuminen:
+
+```bash
+sudo docker run hello-world
+```
+
+<p align="center">
+<img width="712" height="404" alt="image" src="https://github.com/user-attachments/assets/8b564ff8-20d1-478c-8f65-b449185e93a5" />
+  <br>
+  <em>Kuva 15. Dockerin Hello world -varmistus</em>
+</p>
+<br>
+<br>
+
+Päätin valita kiinnostavaksi konttikuvaksi avoimen lähdekoodin nginx-verkkopalvelinohjelmiston (https://hub.docker.com/_/nginx). Nginx on yksi maailman yleisimmin käytetyistä verkkopalvelimista, jonka yhtenä tehtävänä on välittää sisältöä selaimelle, kun käyttäjä avaa verkkosivun. Tässä harjoituksessa Nginx käynnistettiin Dockerissa komennolla ```sudo docker run -p 8080:80 nginx```, ja sen toimivuus varmistettiin avaamalla selaimessa Nginxin oletussivu osoitteessa ```http://localhost:8080/```. Tämä vahvisti, että Docker käynnistyi onnistuneesti ja että verkkopalvelin toimi odotetulla tavalla:
+
+<p align="center">
+<img width="917" height="394" alt="Näyttökuva 2026-09-25 170440" src="https://github.com/user-attachments/assets/976f808c-b2e1-442b-a935-a8fa9710e99d" />
+  <br>
+  <em>Kuva 16. Welcome to nginx!/em>
+</p>
+<br>
+<br>
+
+#### Challenge: My Development Workstation
+
+Työasemani perustuisi Kali Linuxiin, koska se sisältää jo valmiiksi suurimman osan tarvitsemistani tietoturva- ja kehitystyökaluista. Käyttäisin työasemaa ohjelmointiin, verkkosovellusten testaamiseen, Linux-järjestelmien hallintaan sekä haavoittuvuuksien ja ohjelmistojen analysointiin. Versionhallintaan käyttäisin Git:iä ja erilaisten testausympäristöjen luomiseen Dockeria.
+
+En tekisi järjestelmään suuria muutoksia, sillä Kali Linux tarjoaa lähes kaiken tarvitsemani jo valmiiksi. Panostaisin kuitenkin erityisesti näytönohjaimeen, sillä siitä on hyötyä tietoturvatehtävissä. Esimerkiksi Tunkeutumistestaus-kurssilla tutuksi tulleet John the Ripper ja erityisesti Hashcat pystyvät hyödyntämään näytönohjainta salasanojen ja hashien analysoinnissa, jolloin suorituskyky voi olla huomattavasti parempi kuin pelkkää prosessoria käytettäessä.
+
+Uutena työkaluna asensin Ghidran, johon tutustuin myös tällä hetkellä käymälläni Sovellusten hakkerointi ja haavoittuvuudet -kurssilla. Ghidra vaikutti mielenkiintoiselta työkalulta ohjelmien analysointiin ja käänteismallinnukseen. Sen avulla voidaan tutkia ohjelmien toimintaa myös silloin, kun lähdekoodi ei ole saatavilla, mikä tekee siitä erittäin hyödyllisen työkalun.
+
+
+
 
