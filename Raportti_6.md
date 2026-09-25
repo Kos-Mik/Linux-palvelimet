@@ -184,7 +184,7 @@ Päätin valita kiinnostavaksi konttikuvaksi avoimen lähdekoodin nginx-verkkopa
 <p align="center">
 <img width="917" height="394" alt="Näyttökuva 2026-09-25 170440" src="https://github.com/user-attachments/assets/976f808c-b2e1-442b-a935-a8fa9710e99d" />
   <br>
-  <em>Kuva 16. Welcome to nginx!/em>
+  <em>Kuva 16. Welcome to nginx!</em>
 </p>
 <br>
 <br>
@@ -193,10 +193,39 @@ Päätin valita kiinnostavaksi konttikuvaksi avoimen lähdekoodin nginx-verkkopa
 
 Työasemani perustuisi Kali Linuxiin, koska se sisältää jo valmiiksi suurimman osan tarvitsemistani tietoturva- ja kehitystyökaluista. Käyttäisin työasemaa ohjelmointiin, verkkosovellusten testaamiseen, Linux-järjestelmien hallintaan sekä haavoittuvuuksien ja ohjelmistojen analysointiin. Versionhallintaan käyttäisin Git:iä ja erilaisten testausympäristöjen luomiseen Dockeria.
 
-En tekisi järjestelmään suuria muutoksia, sillä Kali Linux tarjoaa lähes kaiken tarvitsemani jo valmiiksi. Panostaisin kuitenkin erityisesti näytönohjaimeen, sillä siitä on hyötyä tietoturvatehtävissä. Esimerkiksi Tunkeutumistestaus-kurssilla tutuksi tulleet John the Ripper ja erityisesti Hashcat pystyvät hyödyntämään näytönohjainta salasanojen ja hashien analysoinnissa, jolloin suorituskyky voi olla huomattavasti parempi kuin pelkkää prosessoria käytettäessä.
+En tekisi järjestelmään suuria muutoksia, sillä Kali Linux sisältää tosiaan jo ison määrän erilaisia hyödyllisiä työkaluja. Panostaisin kuitenkin näytönohjaimeen, sillä siitä on hyötyä tietoturvatehtävissä. Esimerkiksi Tunkeutumistestaus-kurssilla tutuksi tulleet John the Ripper ja erityisesti Hashcat pystyvät hyödyntämään näytönohjainta salasanojen ja hashien analysoinnissa, jolloin suorituskyky voi olla huomattavasti parempi kuin pelkkää prosessoria käytettäessä.
 
-Uutena työkaluna asensin Ghidran, johon tutustuin myös tällä hetkellä käymälläni Sovellusten hakkerointi ja haavoittuvuudet -kurssilla. Ghidra vaikutti mielenkiintoiselta työkalulta ohjelmien analysointiin ja käänteismallinnukseen. Sen avulla voidaan tutkia ohjelmien toimintaa myös silloin, kun lähdekoodi ei ole saatavilla, mikä tekee siitä erittäin hyödyllisen työkalun.
+Uutena työkaluna asennan Ghidran, johon tutustuin myös tällä hetkellä käymälläni Sovellusten hakkerointi ja haavoittuvuudet -kurssilla. Ghidra vaikutti mielenkiintoiselta ja hyödylliseltä työkalulta ohjelmien analysointiin ja käänteismallinnukseen, koska sen avulla voidaan tutkia ohjelmien toimintaa myös silloin, kun lähdekoodi ei ole saatavilla.
 
+Ghidran asentaminen Debian 13:sta ei ole niin yksinkertaista kuin Kalille. Ghidra on Java-pohjainen ohjelmisto ja uusissa Kali-versioissa onkin valmiina jo tarvittavat Java-kirjastot. Eli ainoa komento, joka tarvitaan sen asentamiseen on ```sudo apt install ghidra```, jonka jälkeen se on valmis käytettäväksi. 
 
+Debian 13 tapauksessa pitää asentaa Java-kirjastot erikseen, koska näitä ei ```java --version``` -komennolla tutkiessa ollut olemassa. Siispä asennetaan kyseiset kirjastot komennolla ```sudo apt install default-jdk```, jonka jälkeen tarkistetaan, että asennus on onnistunut ja Javan versio:
 
+<p align="center">
+<img width="725" height="92" alt="image" src="https://github.com/user-attachments/assets/faddf61d-bca1-4ae0-8d1f-b8454f15251b" />
+  <br>
+  <em>Kuva 17. Java-versio</em>
+</p>
+<br>
+<br>
+
+Sitten ladataan Ghidran uusin versio GitHubista komennolla ```wget https://github.com/NationalSecurityAgency/ghidra/releases/download/Ghidra_12.1.4_build/ghidra_12.1.4_PUBLIC_20260921.zip```. 
+
+<br>
+
+Puretaan se ```unzip ghidra_12.1.4_PUBLIC_20260921.zip```. 
+
+<br>
+
+Siirrytään hakemistoon ```cd ghidra_12.1.4_PUBLIC``` ja käynnistetään Ghidra ```./ghidraRun```:
+
+<p align="center">
+<img width="499" height="652" alt="Näyttökuva 2026-09-25 174356" src="https://github.com/user-attachments/assets/f57ef264-5996-488b-9a85-7ef654e4f44d" />
+  <br>
+  <em>Kuva 19. Ghidra käynnistymässä</em>
+</p>
+<br>
+<br>
+
+Käänteismallinnukseen hämmästyttävä ohjelma. Alunperin NSA:n kehittämä, mutta on sittemmin julkaistu avoimella lähdekoodilla. Käyttö vaatii jonkin verran C-kielen osaamista, koska Assembly käännetään Ghidrassa eräänlaiselle pseudo C-kielelle. Mutta jos osaa jo ennestään muita ohjelmointikieliä, Ghidran tulostama logiikka avautuu kyllä suhteellisen nopeasti.
 
