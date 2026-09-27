@@ -2,7 +2,7 @@
 
 ## Johdanto 
 
-Tässä harjoituksessa Osoitteet ja muut yksilöivät tiedot ovat osittain tietoturvasyistä obfuskoitu.
+Tässä harjoituksessa testataan Gitin ja GitHubin käyttöönottoa sekä Dockerin perusteita. Lopuksi pohditaan omaa ihanteellista kehitystyöasemaa ja siihen soveltuvia työkaluja. Osoitteet ja muut yksilöivät tiedot ovat osittain tietoturvasyistä obfuskoitu.
 
 ## Git
 
