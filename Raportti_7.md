@@ -41,7 +41,7 @@ Muutan myös HISTSIZE (kuinka monta komentoa Bash pitää muistissa nykyisen ist
 <br>
 <br>
 
-Nyt tarkoitus on tehdä ./bashrc-tiedostosta omanlainen. Ensiksi kasvatan komentohistorian kokoa niin, että HISTSIZE muistaa 2000 ja HISTFILESIZE 5000 komentoa. Tämä helpottaa olennaisesti työtä, kun voi tarvittaessa vain painaa nuolinäppäintä ylös. Lisäsin myös uusina aliaksina **ll** eli listauskomennon **ls -la**, IP-osoitteen pikatarkistuksena **ip addr show** on **myip** ja kun haluan löytää tiedoston nopeasti olen laittanut komennolle **find . -type f** aliakseksi **ff**. Tervehdystekstin vaihdoin vain muotoon "Hello Minuxuser".
+Nyt tarkoitus on tehdä ./bashrc-tiedostosta omanlainen. Ensiksi kasvatan komentohistorian kokoa niin, että HISTSIZE muistaa 2000 ja HISTFILESIZE 5000 komentoa. Tämä helpottaa olennaisesti työtä, kun voi tarvittaessa vain painaa nuolinäppäintä ylös. Lisäsin myös uusina aliaksina **ll** eli listauskomennon **ls -la**, IP-osoitteen pikatarkistuksena **myip** on alias komennolle **ip addr show** ja kun haluan löytää tiedoston nopeasti olen laittanut komennolle **find . -type f** aliakseksi **ff**. Tervehdystekstin vaihdoin vain muotoon "Hello Minuxuser".
 
 <p align="center">
 <img width="722" height="56" alt="image" src="https://github.com/user-attachments/assets/b766631a-3a7e-4fa8-a371-adfe89b5084e" />
