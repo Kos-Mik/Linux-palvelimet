@@ -2,6 +2,8 @@
 
 ## Johdanto 
 
+Tässä tehtävässä tutustutaan Bash Shellin muokkaamiseen ja yksinkertaisten shell scriptien tekemiseen. Tarkoituksena on muokata .bashrc-tiedostoa omiin tarpeisiin sopivaksi sekä tehdä scripti, joka automatisoi muutaman yksinkertaisen komennon suorittamisen.
+
 ## Bash Shell
 
 Alkuun otetaan tehtävänannon mukaisesti varmuuskopio **.bashrc**:stä ja varmistettu, että se on varmasti olemassa:
