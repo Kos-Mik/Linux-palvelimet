@@ -26,7 +26,7 @@ Tämän jälkeen avataan .bashrc **nano**-editorilla ja tehdään tiedostoon sel
 <br>
 <br>
 
-Lisään tämän jälkeen nanolla vielä kaksi aliasta (**c**, joka suorittaa terminaalin tyhjennyskomennon **clear** ja **update** joka päivittää Linuxini ajantasalle **sudo apt update && sudo apt upgrade -y**). Näitä komentoja on ainakin tämän kurssin aikana tullut käytettyä runsaasti. 
+Lisään tämän jälkeen nanolla vielä kaksi aliasta (**c**, joka suorittaa terminaalin tyhjennyskomennon ```clear``` ja **update** joka päivittää Linuxini ajantasalle ```sudo apt update && sudo apt upgrade -y```). Näitä komentoja on ainakin tämän kurssin aikana tullut käytettyä runsaasti. 
 Ja vaikka ne eivät sellaisenaankaan kovin pitkiä ole, ajansäästöä se on pienikin ajansäästö. 
 
 Muutan myös HISTSIZE (kuinka monta komentoa Bash pitää muistissa nykyisen istunnon aikana) ja HISTFILESIZE (kuinka monta komentoa tallennetaan pysyvästi tiedostoon) todella pieniksi (vain 2 ja 4) ja testaan miten tämä toimii:
@@ -41,7 +41,7 @@ Muutan myös HISTSIZE (kuinka monta komentoa Bash pitää muistissa nykyisen ist
 <br>
 <br>
 
-Nyt tarkoitus on tehdä ./bashrc-tiedostosta omanlainen. Ensiksi kasvatan komentohistorian kokoa niin, että HISTSIZE muistaa 2000 ja HISTFILESIZE 5000 komentoa. Tämä helpottaa olennaisesti työtä, kun voi tarvittaessa vain painaa nuolinäppäintä ylös. Lisäsin myös uusina aliaksina **ll** eli listauskomennon **ls -la**, IP-osoitteen pikatarkistuksena **myip** on alias komennolle **ip addr show** ja kun haluan löytää tiedoston nopeasti olen laittanut komennolle **find . -type f** aliakseksi **ff**. Tervehdystekstin vaihdoin vain muotoon "Hello Minuxuser".
+Nyt tarkoitus on tehdä ./bashrc-tiedostosta omanlainen. Ensiksi kasvatan komentohistorian kokoa niin, että HISTSIZE muistaa 2000 ja HISTFILESIZE 5000 komentoa. Tämä helpottaa olennaisesti työtä, kun voi tarvittaessa vain painaa nuolinäppäintä ylös. Lisäsin myös uusina aliaksina **ll** eli listauskomennon ```ls -la```, IP-osoitteen pikatarkistuksena **myip** on alias komennolle ```ip addr show``` ja kun haluan löytää tiedoston nopeasti, olen laittanut komennolle ```find . -type f``` aliakseksi **ff**. Tervehdystekstin vaihdoin vain muotoon "Hello Minuxuser".
 
 <p align="center">
 <img width="722" height="56" alt="image" src="https://github.com/user-attachments/assets/b766631a-3a7e-4fa8-a371-adfe89b5084e" />
@@ -51,5 +51,34 @@ Nyt tarkoitus on tehdä ./bashrc-tiedostosta omanlainen. Ensiksi kasvatan koment
 <br>
 <br>
 
+## Shell Script
+
+Tässä tehtävässä luodaan oma shell script. Valitsen tehtävistä a-vaihtoehdon, jossa tarkoituksena on luoda shell script, joka luo **project**-nimisen hakemiston, luo tänne **info.txt**-nimisen tiedoston, kirjoittaa tiedostoon käyttäjän **nimen** ja **kuluvan päivämäärän** ja lopuksi listaa project-hakemiston koko sisällön.
+
+Aloitan luomalla scriptitiedoston nano-editorilla komennolla ```nano project.sh``` ja sinne lisään sisällöksi:
+
+```bash
+#!/bin/bash #Ns. "shebang" kertoo Linuxille, että scripti suoritetaan Bash-tulkilla, mikä varmistaa oikean suoritusympäristön (Geeksforgeeks, 2026).
+
+mkdir project #Luo hakemiston
+
+echo "Username: $USER" > project/info.txt #Luo info.txt-tiedoston käyttäjän nimellä
+echo "Date: $(date)" >> project/info.txt #Lisää kuluvan päivämäärän info.txt.tiedostoon
+
+ls -l project #Listaa hakemiston sisällön
+```
+
+Tämän jälkeen annetaan scriptille suoritusoikeus komennolla ```chmod +x project.sh```, suoritetaan scripti komennolla ```./project.sh``` ja tarkistetaan vielä info.txt-tiedoston sisältö ```cat project/info.txt```:
+
+<p align="center">
+<img width="731" height="309" alt="image" src="https://github.com/user-attachments/assets/45b58a25-96b9-4e87-b600-9881e7b9cdee" />
+ <br>
+  <em>Kuva 7. Suoritettu scripti ja tiedoston sisällön tarkistus.</em>
+</p>
+<br>
+<br>
 
 
+## Lähteet:
+
+Geeksforgeeks. 2026. Shell Scripting – Understanding Shebang (#!/bin/bash). Luettavissa: https://www.geeksforgeeks.org/linux-unix/shell-scripting-define-bin-bash/. Luettu 6.10.2026.
